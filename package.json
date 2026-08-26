@@ -7,7 +7,9 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "build": "(cd android && ./gradlew assembleRelease)",
+    "clean": "(cd android && ./gradlew clean)"
   },
   "dependencies": {
     "@react-native/new-app-screen": "0.85.3",
@@ -38,6 +40,5 @@
   },
   "engines": {
     "node": ">= 22.11.0"
-  },
-  "packageManager": "yarn@3.6.4"
+  }
 }
