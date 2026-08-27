@@ -59,7 +59,7 @@ export const FormField: FC<FormFieldProps> = ({
             accessibilityLabel={isSecretVisible ? 'Hide Secret' : 'Show Secret'}
             disabled={disabled}
             hitSlop={8}
-            onPress={() => setIsSecretVisible(visible => !visible)}
+            onPress={() => setIsSecretVisible((visible) => !visible)}
           >
             <Text style={styles.visibilityText}>
               {isSecretVisible ? 'Hide' : 'Show'}
