@@ -14,6 +14,16 @@ export const styles = StyleSheet.create({
     paddingTop: SPACING.HEADER_TOP,
     paddingBottom: SPACING.HEADER_BOTTOM,
   },
+  headerCompact: {
+    paddingTop: SPACING.CARD_PADDING,
+    paddingBottom: SPACING.LABEL_BOTTOM,
+  },
+  brandRow: {
+    alignItems: 'center',
+  },
+  brandRowCompact: {
+    flexDirection: 'row',
+  },
   logoMark: {
     alignItems: 'center',
     backgroundColor: COLORS.SURFACE,
@@ -22,6 +32,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: SPACING.LOGO_GAP,
     width: SIZES.LOGO,
+  },
+  logoMarkCompact: {
+    marginBottom: 0,
+    marginRight: SPACING.LOGO_GAP,
   },
   logoStem: {
     backgroundColor: COLORS.PRIMARY,
@@ -52,7 +66,7 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: RADII.CARD,
     flex: 1,
     paddingHorizontal: SPACING.SCREEN_HORIZONTAL,
-    paddingTop: SPACING.CARD_PADDING,
+    paddingTop: SPACING.FORM_GAP,
   },
   title: {
     ...TYPOGRAPHY.HEADING,
@@ -67,7 +81,7 @@ export const styles = StyleSheet.create({
     marginTop: SPACING.FORM_GAP,
   },
   signInButton: {
-    marginTop: SPACING.BUTTON_TOP,
+    marginTop: SPACING.LABEL_BOTTOM,
   },
   footer: {
     backgroundColor: COLORS.BACKGROUND,

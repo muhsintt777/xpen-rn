@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   StatusBar,
@@ -15,20 +16,51 @@ import { COLORS } from '../../theme';
 export const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardShowSubscription = Keyboard.addListener(
+      'keyboardDidShow',
+      () => setIsKeyboardVisible(true),
+    );
+    const keyboardHideSubscription = Keyboard.addListener(
+      'keyboardDidHide',
+      () => setIsKeyboardVisible(false),
+    );
+
+    return () => {
+      keyboardShowSubscription.remove();
+      keyboardHideSubscription.remove();
+    };
+  }, []);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView edges={['top']} style={styles.safeArea}>
       <StatusBar barStyle="light-content" backgroundColor={COLORS.PRIMARY} />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={styles.keyboardContainer}
       >
-        <View style={styles.header}>
-          <View style={styles.logoMark}>
-            <View style={styles.logoStem} />
-            <View style={styles.logoDot} />
+        <View
+          style={[styles.header, isKeyboardVisible && styles.headerCompact]}
+        >
+          <View
+            style={[
+              styles.brandRow,
+              isKeyboardVisible && styles.brandRowCompact,
+            ]}
+          >
+            <View
+              style={[
+                styles.logoMark,
+                isKeyboardVisible && styles.logoMarkCompact,
+              ]}
+            >
+              <View style={styles.logoStem} />
+              <View style={styles.logoDot} />
+            </View>
+            <Text style={styles.brand}>Xpen</Text>
           </View>
-          <Text style={styles.brand}>Xpen</Text>
           <Text style={styles.tagline}>Your spending, made clear.</Text>
         </View>
 
