@@ -2,20 +2,19 @@ import { useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   StatusBar,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { COLORS } from '../../theme';
 import { styles } from './login-screen-styles';
+import { PrimaryButton } from '../../components/primary-button';
+import { FormField } from '../../components/form-field';
+import { COLORS } from '../../theme';
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -40,52 +39,27 @@ export const LoginScreen = () => {
           </Text>
 
           <View style={styles.form}>
-            <Text style={styles.label}>Email address</Text>
-            <TextInput
-              autoCapitalize="none"
-              autoComplete="email"
-              keyboardType="email-address"
+            <FormField
+              label="Email address"
               onChangeText={setEmail}
               placeholder="you@example.com"
-              placeholderTextColor={COLORS.TEXT_SECONDARY}
-              style={styles.input}
+              type="text"
               value={email}
             />
 
-            <Text style={styles.label}>Password</Text>
-            <View style={styles.passwordField}>
-              <TextInput
-                autoComplete="password"
-                onChangeText={setPassword}
-                placeholder="Enter your password"
-                placeholderTextColor={COLORS.TEXT_SECONDARY}
-                secureTextEntry={!isPasswordVisible}
-                style={styles.passwordInput}
-                value={password}
-              />
-              <Pressable
-                accessibilityLabel={
-                  isPasswordVisible ? 'Hide password' : 'Show password'
-                }
-                hitSlop={8}
-                onPress={() => setIsPasswordVisible(visible => !visible)}
-              >
-                <Text style={styles.visibilityText}>
-                  {isPasswordVisible ? 'Hide' : 'Show'}
-                </Text>
-              </Pressable>
-            </View>
+            <FormField
+              label="Password"
+              onChangeText={setPassword}
+              placeholder="Enter your password"
+              type="secret"
+              value={password}
+            />
 
-            <Pressable
-              accessibilityRole="button"
+            <PrimaryButton
+              label="Sign in"
               onPress={() => undefined}
-              style={({ pressed }) => [
-                styles.signInButton,
-                pressed && styles.signInButtonPressed,
-              ]}
-            >
-              <Text style={styles.signInText}>Sign in</Text>
-            </Pressable>
+              style={styles.signInButton}
+            />
           </View>
         </View>
 

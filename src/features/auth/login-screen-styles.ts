@@ -66,55 +66,8 @@ export const styles = StyleSheet.create({
   form: {
     marginTop: SPACING.FORM_GAP,
   },
-  label: {
-    color: COLORS.TEXT_PRIMARY,
-    ...TYPOGRAPHY.LABEL,
-    marginBottom: SPACING.LABEL_BOTTOM,
-  },
-  input: {
-    backgroundColor: COLORS.SURFACE,
-    borderColor: COLORS.BORDER_SUBTLE,
-    borderRadius: RADII.CONTROL,
-    borderWidth: SIZES.BORDER_WIDTH,
-    color: COLORS.TEXT_PRIMARY,
-    ...TYPOGRAPHY.BODY,
-    height: SIZES.CONTROL_HEIGHT,
-    marginBottom: SPACING.FIELD_GAP,
-    paddingHorizontal: SPACING.CONTROL_PADDING,
-  },
-  passwordField: {
-    alignItems: 'center',
-    backgroundColor: COLORS.SURFACE,
-    borderRadius: RADII.CONTROL,
-    flexDirection: 'row',
-    height: SIZES.CONTROL_HEIGHT,
-    paddingRight: SPACING.CONTROL_PADDING,
-  },
-  passwordInput: {
-    color: COLORS.TEXT_PRIMARY,
-    flex: 1,
-    ...TYPOGRAPHY.BODY,
-    height: '100%',
-    paddingHorizontal: SPACING.CONTROL_PADDING,
-  },
-  visibilityText: {
-    ...TYPOGRAPHY.LABEL,
-    color: COLORS.PRIMARY,
-  },
   signInButton: {
-    alignItems: 'center',
-    backgroundColor: COLORS.PRIMARY,
-    borderRadius: RADII.BUTTON,
-    height: SIZES.CONTROL_HEIGHT,
-    justifyContent: 'center',
     marginTop: SPACING.BUTTON_TOP,
-  },
-  signInButtonPressed: {
-    backgroundColor: COLORS.PRIMARY_PRESSED,
-  },
-  signInText: {
-    ...TYPOGRAPHY.BUTTON,
-    color: COLORS.TEXT_ON_PRIMARY,
   },
   footer: {
     backgroundColor: COLORS.BACKGROUND,
