@@ -1,0 +1,32 @@
+const SPACE = {
+  NONE: 0,
+  XS: 4,
+  SM: 8,
+  MD: 12,
+  LG: 16,
+  XL: 20,
+  XXL: 24,
+  XXXL: 32,
+  HUGE: 40,
+  XXXXL: 48,
+  XXXXXL: 56,
+} as const;
+
+export const SPACING = {
+  SCREEN_HORIZONTAL: SPACE.XXL,
+  CARD_PADDING: SPACE.LG,
+  FORM_GAP: SPACE.XXL,
+  BUTTON_TOP: SPACE.XXXL,
+  HEADER_TOP: SPACE.XXXXXL,
+  HEADER_BOTTOM: SPACE.HUGE,
+  LOGO_GAP: SPACE.MD,
+  INLINE_GAP: SPACE.XS,
+  LABEL_BOTTOM: SPACE.SM,
+  FIELD_GAP: SPACE.XXL,
+  CONTROL_PADDING: SPACE.LG,
+  ACTION_GAP: SPACE.XXL,
+  FOOTER_BOTTOM: SPACE.XXL,
+} as const;
+
+export type SpaceName = keyof typeof SPACE;
+export type SpacingName = keyof typeof SPACING;
