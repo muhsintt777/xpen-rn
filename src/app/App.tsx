@@ -1,10 +1,5 @@
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { LoginScreen } from '../features/auth/login-screen';
+import { AppNavigator } from './app-navigator';
 
 export const App = () => {
-  return (
-    <SafeAreaProvider>
-      <LoginScreen />
-    </SafeAreaProvider>
-  );
+  return <AppNavigator />;
 };
