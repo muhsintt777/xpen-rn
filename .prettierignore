@@ -1,0 +1,18 @@
+node_modules/
+
+# React Native generated files
+android/.gradle/
+android/build/
+android/app/build/
+android/app/.cxx/
+ios/Pods/
+ios/build/
+ios/**/*.xcassets/
+
+# Test and coverage output
+coverage/
+
+# Common generated output
+dist/
+build/
+*.generated.*
