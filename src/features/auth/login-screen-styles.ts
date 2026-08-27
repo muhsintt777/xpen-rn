@@ -116,12 +116,6 @@ export const styles = StyleSheet.create({
     ...TYPOGRAPHY.BUTTON,
     color: COLORS.TEXT_ON_PRIMARY,
   },
-  forgotPassword: {
-    alignSelf: 'center',
-    color: COLORS.PRIMARY,
-    ...TYPOGRAPHY.LABEL,
-    marginTop: SPACING.ACTION_GAP,
-  },
   footer: {
     backgroundColor: COLORS.BACKGROUND,
     color: COLORS.TEXT_SECONDARY,

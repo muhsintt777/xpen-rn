@@ -3,12 +3,12 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
-  SafeAreaView,
   StatusBar,
   Text,
   TextInput,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../../theme';
 import { styles } from './login-screen-styles';
 
@@ -29,7 +29,7 @@ export const LoginScreen = () => {
             <View style={styles.logoStem} />
             <View style={styles.logoDot} />
           </View>
-          <Text style={styles.brand}>xpen</Text>
+          <Text style={styles.brand}>Xpen</Text>
           <Text style={styles.tagline}>Your spending, made clear.</Text>
         </View>
 
@@ -87,10 +87,6 @@ export const LoginScreen = () => {
               <Text style={styles.signInText}>Sign in</Text>
             </Pressable>
           </View>
-
-          <Pressable accessibilityRole="button" onPress={() => undefined}>
-            <Text style={styles.forgotPassword}>Forgot password?</Text>
-          </Pressable>
         </View>
 
         <Text style={styles.footer}>New to xpen? Create an account</Text>
