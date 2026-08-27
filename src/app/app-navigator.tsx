@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { LoginScreen } from '../features/auth/login-screen';
-import { HomeScreen } from '../features/home/home-screem';
+import { LoginScreen } from '@/features/auth/login-screen';
+import { HomeScreen } from '@/features/home/home-screem';
 
 type AuthStackParamList = {
   Login: undefined;

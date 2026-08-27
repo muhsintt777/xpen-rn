@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { COLORS, RADII, SIZES, SPACING, TYPOGRAPHY } from '../../theme';
+import { COLORS, RADII, SIZES, SPACING, TYPOGRAPHY } from '@/theme';
 
 export const styles = StyleSheet.create({
   safeArea: {

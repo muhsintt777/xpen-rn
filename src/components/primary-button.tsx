@@ -6,7 +6,7 @@ import {
   Text,
   ViewStyle,
 } from 'react-native';
-import { COLORS, RADII, SIZES, TYPOGRAPHY } from '../theme';
+import { COLORS, RADII, SIZES, TYPOGRAPHY } from '@/theme';
 
 interface PrimaryButtonProps {
   disabled?: boolean;

@@ -8,10 +8,10 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { styles } from './login-screen-styles';
-import { PrimaryButton } from '../../components/primary-button';
-import { FormField } from '../../components/form-field';
-import { COLORS } from '../../theme';
+import { styles } from '@/features/auth/login-screen-styles';
+import { PrimaryButton } from '@/components/primary-button';
+import { FormField } from '@/components/form-field';
+import { COLORS } from '@/theme';
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState('');

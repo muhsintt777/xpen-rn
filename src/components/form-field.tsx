@@ -7,7 +7,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { COLORS, RADII, SIZES, SPACING, TYPOGRAPHY } from '../theme';
+import { COLORS, RADII, SIZES, SPACING, TYPOGRAPHY } from '@/theme';
 
 type FormFieldType = 'text' | 'secret' | 'number';
 
