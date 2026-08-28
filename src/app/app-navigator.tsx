@@ -15,6 +15,7 @@ const AuthStack = createStackNavigator<AuthStackParamList>();
 const AppStack = createStackNavigator<AppStackParamList>();
 
 export const AppNavigator = () => {
+  // Replace with your real auth state
   const isAuthenticated = false; // Replace with your real auth state
 
   return (

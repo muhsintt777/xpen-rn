@@ -1,12 +1,10 @@
-// import { AppNavigator } from '@/app/app-navigator';
-import { HomeScreen } from '@/features/home/home-screem';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { AppNavigator } from '@/app/app-navigator';
 
 export const App = () => {
   return (
     <SafeAreaProvider>
-      <HomeScreen />
+      <AppNavigator />
     </SafeAreaProvider>
   );
-  // return <AppNavigator />;
 };
