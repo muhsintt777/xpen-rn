@@ -11,12 +11,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from '@/features/auth/login-screen-styles';
 import { PrimaryButton } from '@/components/primary-button';
 import { FormField } from '@/components/form-field';
+import { useLogin } from '@/features/auth/auth-hooks';
 import { COLORS } from '@/theme';
 
 export const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+  const { email, handleLogin, isSubmitting, password, setEmail, setPassword } =
+    useLogin();
 
   useEffect(() => {
     const keyboardShowSubscription = Keyboard.addListener(
@@ -72,6 +73,7 @@ export const LoginScreen = () => {
 
           <View style={styles.form}>
             <FormField
+              disabled={isSubmitting}
               label="Email address"
               onChangeText={setEmail}
               placeholder="you@example.com"
@@ -80,6 +82,7 @@ export const LoginScreen = () => {
             />
 
             <FormField
+              disabled={isSubmitting}
               label="Password"
               onChangeText={setPassword}
               placeholder="Enter your password"
@@ -88,8 +91,9 @@ export const LoginScreen = () => {
             />
 
             <PrimaryButton
-              label="Sign in"
-              onPress={() => undefined}
+              disabled={isSubmitting}
+              label={isSubmitting ? 'Signing in...' : 'Sign in'}
+              onPress={handleLogin}
               style={styles.signInButton}
             />
           </View>
