@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Alert, Keyboard } from 'react-native';
-import { AuthService } from '@/features/auth/auth-service';
-import { AuthStorage } from '@/services/auth-storage';
+import { selectAuth, login } from '@/features/auth/auth-slice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 export const useLogin = () => {
+  const dispatch = useAppDispatch();
+  const { isLoggingIn } = useAppSelector(selectAuth);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleLogin = async () => {
     if (!email.trim() || !password) {
@@ -14,18 +16,13 @@ export const useLogin = () => {
       return;
     }
 
-    setIsSubmitting(true);
-
     try {
-      const { accessToken, refreshToken } = await AuthService.login(
-        email.trim(),
-        password,
-      );
-
-      await Promise.all([
-        AuthStorage.setAccessToken(accessToken),
-        AuthStorage.setRefreshToken(refreshToken),
-      ]);
+      await dispatch(
+        login({
+          email: email.trim(),
+          password,
+        }),
+      ).unwrap();
 
       Keyboard.dismiss();
     } catch {
@@ -33,15 +30,13 @@ export const useLogin = () => {
         'Sign in failed',
         'Check your email and password, then try again.',
       );
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
   return {
     email,
     handleLogin,
-    isSubmitting,
+    isLoggingIn,
     password,
     setEmail,
     setPassword,

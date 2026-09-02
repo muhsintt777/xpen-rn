@@ -1,7 +1,10 @@
+import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginScreen } from '@/features/auth/login-screen';
 import { HomeScreen } from '@/features/home/home-screem';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { refreshAccessToken, selectAuth } from '@/features/auth/auth-slice';
 
 type AuthStackParamList = {
   Login: undefined;
@@ -15,12 +18,16 @@ const AuthStack = createStackNavigator<AuthStackParamList>();
 const AppStack = createStackNavigator<AppStackParamList>();
 
 export const AppNavigator = () => {
-  // Replace with your real auth state
-  const isAuthenticated = false; // Replace with your real auth state
+  const dispatch = useAppDispatch();
+  const { isLoggedIn } = useAppSelector(selectAuth);
+
+  useEffect(() => {
+    dispatch(refreshAccessToken());
+  }, [dispatch]);
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? (
+      {isLoggedIn ? (
         <AppStack.Navigator
           initialRouteName="Home"
           screenOptions={{

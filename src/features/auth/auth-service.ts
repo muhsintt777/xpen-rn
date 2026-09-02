@@ -19,6 +19,11 @@ export class AuthService {
     return res.data?.data as LoginResponse;
   }
 
+  static async refresh(refreshToken: string): Promise<string> {
+    const res = await api.post(`${this.PREFIX}/refresh`, { refreshToken });
+    return res.data?.data;
+  }
+
   static async register(payload: RegisterPayload) {
     await api.post(`/user`, payload);
   }
