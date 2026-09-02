@@ -16,7 +16,7 @@ import { COLORS } from '@/theme';
 
 export const LoginScreen = () => {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
-  const { email, handleLogin, isSubmitting, password, setEmail, setPassword } =
+  const { email, handleLogin, isLoggingIn, password, setEmail, setPassword } =
     useLogin();
 
   useEffect(() => {
@@ -68,12 +68,12 @@ export const LoginScreen = () => {
         <View style={styles.content}>
           <Text style={styles.title}>Welcome back</Text>
           <Text style={styles.subtitle}>
-            Sign in to continue to your account.
+            Login in to continue to your account.
           </Text>
 
           <View style={styles.form}>
             <FormField
-              disabled={isSubmitting}
+              disabled={isLoggingIn}
               label="Email address"
               onChangeText={setEmail}
               placeholder="you@example.com"
@@ -82,7 +82,7 @@ export const LoginScreen = () => {
             />
 
             <FormField
-              disabled={isSubmitting}
+              disabled={isLoggingIn}
               label="Password"
               onChangeText={setPassword}
               placeholder="Enter your password"
@@ -91,8 +91,8 @@ export const LoginScreen = () => {
             />
 
             <PrimaryButton
-              disabled={isSubmitting}
-              label={isSubmitting ? 'Signing in...' : 'Sign in'}
+              disabled={isLoggingIn}
+              label={isLoggingIn ? 'Login...' : 'Login'}
               onPress={handleLogin}
               style={styles.signInButton}
             />

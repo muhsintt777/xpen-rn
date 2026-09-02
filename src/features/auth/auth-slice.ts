@@ -1,4 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  ActionReducerMapBuilder,
+  createAsyncThunk,
+  createSlice,
+} from '@reduxjs/toolkit';
 import { AuthService } from '@/features/auth/auth-service';
 import { AuthStorage } from '@/services/auth-storage';
 
@@ -36,35 +40,65 @@ export const login = createAsyncThunk(
   },
 );
 
+export const logout = createAsyncThunk('auth/logout', async () => {
+  await AuthStorage.clearTokens();
+  await AuthService.logout();
+});
+
+const refreshAccessTokenBuilder = (
+  builder: ActionReducerMapBuilder<AuthState>,
+) => {
+  builder
+    .addCase(refreshAccessToken.fulfilled, (state, action) => {
+      state.accessToken = action.payload;
+      state.isLoggedIn = true;
+      state.status = 'SUCCESS';
+    })
+    .addCase(refreshAccessToken.rejected, (state) => {
+      state.accessToken = null;
+      state.isLoggedIn = false;
+      state.status = 'FAILED';
+    });
+};
+
+const loginBuilder = (builder: ActionReducerMapBuilder<AuthState>) => {
+  builder
+    .addCase(login.pending, (state) => {
+      state.isLoggingIn = true;
+    })
+    .addCase(login.fulfilled, (state, action) => {
+      state.accessToken = action.payload.accessToken;
+      state.isLoggingIn = false;
+      state.isLoggedIn = true;
+      state.status = 'SUCCESS';
+    })
+    .addCase(login.rejected, (state) => {
+      state.isLoggingIn = false;
+      state.isLoggedIn = false;
+      state.status = 'FAILED';
+    });
+};
+
+const logoutBuilder = (builder: ActionReducerMapBuilder<AuthState>) => {
+  builder
+    .addCase(logout.fulfilled, (state) => {
+      state.accessToken = null;
+      state.isLoggedIn = false;
+    })
+    .addCase(logout.rejected, (state) => {
+      state.accessToken = null;
+      state.isLoggedIn = false;
+    });
+};
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(refreshAccessToken.fulfilled, (state, action) => {
-        state.accessToken = action.payload;
-        state.status = 'SUCCESS';
-      })
-      .addCase(refreshAccessToken.rejected, (state) => {
-        state.accessToken = null;
-        state.status = 'FAILED';
-      })
-
-      .addCase(login.pending, (state) => {
-        state.isLoggingIn = true;
-      })
-      .addCase(login.fulfilled, (state, action) => {
-        state.accessToken = action.payload.accessToken;
-        state.isLoggingIn = false;
-        state.isLoggedIn = true;
-        state.status = 'SUCCESS';
-      })
-      .addCase(login.rejected, (state) => {
-        state.isLoggingIn = false;
-        state.isLoggedIn = false;
-        state.status = 'FAILED';
-      });
+    refreshAccessTokenBuilder(builder);
+    loginBuilder(builder);
+    logoutBuilder(builder);
   },
 });
 
