@@ -16,6 +16,7 @@ export const RADII = {
   CARD: RADIUS.XXL,
   CONTROL: RADIUS.MD,
   BUTTON: RADIUS.MD,
+  PILL: RADIUS.PILL,
 } as const;
 
 export type RadiusName = keyof typeof RADIUS;
