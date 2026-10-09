@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { COLORS, RADII, SIZES, SPACING, TYPOGRAPHY } from '@/theme';
 
-type FormFieldType = 'text' | 'secret' | 'number';
+type FormFieldType = 'text' | 'secret' | 'number' | 'decimal';
 
 const inputTypeOptions: Record<
   FormFieldType,
@@ -18,6 +18,7 @@ const inputTypeOptions: Record<
   text: { keyboardType: 'default' },
   secret: { keyboardType: 'default' },
   number: { keyboardType: 'number-pad' },
+  decimal: { keyboardType: 'decimal-pad' },
 };
 
 interface FormFieldProps {

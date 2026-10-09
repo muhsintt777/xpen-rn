@@ -26,6 +26,7 @@ export const SPACING = {
   CONTROL_PADDING: SPACE.LG,
   ACTION_GAP: SPACE.XXL,
   FOOTER_BOTTOM: SPACE.XXL,
+  FAB_BOTTOM: SPACE.XXXXXL + SPACE.XXXL,
 } as const;
 
 export type SpaceName = keyof typeof SPACE;

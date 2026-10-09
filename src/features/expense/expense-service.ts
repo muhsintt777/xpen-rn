@@ -1,5 +1,5 @@
 import { api } from '@/services/api';
-import { ExpensePage } from './expense-types';
+import { CreateExpensePayload, ExpensePage } from './expense-types';
 
 export class ExpenseService {
   private static readonly PREFIX = '/expense';
@@ -9,5 +9,9 @@ export class ExpenseService {
       params: { limit, cursor: cursor || undefined },
     });
     return res.data?.data as ExpensePage;
+  }
+
+  static async create(payload: CreateExpensePayload) {
+    await api.post(this.PREFIX, payload);
   }
 }

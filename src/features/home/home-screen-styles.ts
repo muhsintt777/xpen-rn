@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
   },
   list: {
     flexGrow: 1,
-    paddingBottom: SPACING.FOOTER_BOTTOM,
+    paddingBottom: SPACING.FAB_BOTTOM + 56,
     paddingHorizontal: SPACING.SCREEN_HORIZONTAL,
   },
   separator: {

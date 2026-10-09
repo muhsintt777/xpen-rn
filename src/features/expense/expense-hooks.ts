@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { ExpenseService } from './expense-service';
 import { Expense } from './expense-types';
 
@@ -38,9 +39,12 @@ export const useExpenses = () => {
     }
   }, []);
 
-  useEffect(() => {
-    load(true);
-  }, [load]);
+  // Refetch on every focus so a newly created expense appears on return.
+  useFocusEffect(
+    useCallback(() => {
+      load(true);
+    }, [load]),
+  );
 
   return {
     error,
