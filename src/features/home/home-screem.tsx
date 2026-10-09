@@ -1,5 +1,5 @@
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScreenLayout } from '@/components/screen-layout';
 import { ExpenseItem } from '@/components/expense-item';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
@@ -21,15 +21,18 @@ export const HomeScreen = () => {
     useExpenses();
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Expenses</Text>
-        <PrimaryButton
-          label="Logout"
-          onPress={() => dispatch(logout())}
-          style={styles.logoutButton}
-        />
-      </View>
+    <ScreenLayout
+      title="Expenses"
+      drawerContent={
+        <View style={styles.drawerContent}>
+          <PrimaryButton
+            label="Logout"
+            onPress={() => dispatch(logout())}
+            style={styles.logoutButton}
+          />
+        </View>
+      }
+    >
       <FlatList
         contentContainerStyle={styles.list}
         data={expenses}
@@ -53,6 +56,6 @@ export const HomeScreen = () => {
         accessibilityLabel="Add expense"
         onPress={() => navigation.navigate('CreateExpense')}
       />
-    </SafeAreaView>
+    </ScreenLayout>
   );
 };
