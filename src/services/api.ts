@@ -31,9 +31,16 @@ api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError<{ errorType?: string }>) => {
     const originalRequest = error.config as RetryableRequestConfig | undefined;
-    const isSignedOut = error.response?.data?.errorType === 'SIGNED_OUT';
+    const isTokenExpired =
+      error.response?.data?.errorType === 'AUTH_TOKEN_EXPIRED';
+    const isRefreshCall = originalRequest?.url?.includes('/auth/refresh');
 
-    if (!isSignedOut || !originalRequest || originalRequest._retry) {
+    if (
+      !isTokenExpired ||
+      isRefreshCall ||
+      !originalRequest ||
+      originalRequest._retry
+    ) {
       return Promise.reject(error);
     }
 

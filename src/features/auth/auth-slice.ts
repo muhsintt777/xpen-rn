@@ -29,9 +29,14 @@ const initialState: AuthState = {
 export const refreshAccessToken = createAsyncThunk(
   'auth/restoreSession',
   async () => {
-    const refreshToken = await AuthStorage.getRefreshToken();
-    const accessToken = await AuthService.refresh(refreshToken);
-    return accessToken;
+    try {
+      const refreshToken = await AuthStorage.getRefreshToken();
+      return await AuthService.refresh(refreshToken);
+    } catch (error) {
+      // Drop the stored refresh token so the user is fully signed out.
+      await AuthStorage.clearTokens();
+      throw error;
+    }
   },
 );
 
@@ -49,8 +54,11 @@ export const fetchCurrentUser = createAsyncThunk('auth/fetchCurrentUser', () =>
 );
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-  await AuthStorage.clearTokens();
-  await AuthService.logout();
+  try {
+    await AuthService.logout();
+  } finally {
+    await AuthStorage.clearTokens();
+  }
 });
 
 const refreshAccessTokenBuilder = (
