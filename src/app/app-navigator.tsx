@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { LoginScreen } from '@/features/auth/login-screen';
 import { CreateExpenseScreen } from '@/features/expense/create-expense-screen';
 import { HomeScreen } from '@/features/home/home-screen';
+import { SettingsScreen } from '@/features/settings/settings-screen';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { refreshAccessToken, selectAuth } from '@/features/auth/auth-slice';
 
@@ -14,6 +15,7 @@ type AuthStackParamList = {
 export type AppStackParamList = {
   Home: undefined;
   CreateExpense: undefined;
+  Settings: undefined;
 };
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
@@ -38,6 +40,7 @@ export const AppNavigator = () => {
           }}
         >
           <AppStack.Screen name="Home" component={HomeScreen} />
+          <AppStack.Screen name="Settings" component={SettingsScreen} />
           <AppStack.Screen
             name="CreateExpense"
             component={CreateExpenseScreen}

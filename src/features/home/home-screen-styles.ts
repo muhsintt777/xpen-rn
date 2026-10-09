@@ -2,12 +2,6 @@ import { StyleSheet } from 'react-native';
 import { COLORS, SPACING, TYPOGRAPHY } from '@/theme';
 
 export const styles = StyleSheet.create({
-  drawerContent: {
-    padding: SPACING.CARD_PADDING,
-  },
-  logoutButton: {
-    paddingHorizontal: SPACING.CARD_PADDING,
-  },
   list: {
     flexGrow: 1,
     paddingBottom: SPACING.FAB_BOTTOM + 56,

@@ -5,34 +5,19 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { AppStackParamList } from '@/app/app-navigator';
 import { Fab } from '@/components/fab';
-import { PrimaryButton } from '@/components/primary-button';
 import { useExpenses } from '@/features/expense/expense-hooks';
-import { useAppDispatch } from '@/store/hooks';
-import { logout } from '../auth/auth-slice';
 import { styles } from './home-screen-styles';
 
 const Separator = () => <View style={styles.separator} />;
 
 export const HomeScreen = () => {
-  const dispatch = useAppDispatch();
   const navigation =
     useNavigation<StackNavigationProp<AppStackParamList, 'Home'>>();
   const { error, expenses, isLoading, isRefreshing, loadMore, refresh } =
     useExpenses();
 
   return (
-    <ScreenLayout
-      title="Expenses"
-      drawerContent={
-        <View style={styles.drawerContent}>
-          <PrimaryButton
-            label="Logout"
-            onPress={() => dispatch(logout())}
-            style={styles.logoutButton}
-          />
-        </View>
-      }
-    >
+    <ScreenLayout title="Expenses">
       <FlatList
         contentContainerStyle={styles.list}
         data={expenses}

@@ -2,20 +2,16 @@ import { FC, ReactNode, useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppBar } from '@/components/app-bar';
+import { DrawerContent } from '@/components/drawer-content';
 import { SideDrawer } from '@/components/side-drawer';
 import { COLORS } from '@/theme';
 
 interface ScreenLayoutProps {
   children: ReactNode;
-  drawerContent?: ReactNode;
   title: string;
 }
 
-export const ScreenLayout: FC<ScreenLayoutProps> = ({
-  children,
-  drawerContent,
-  title,
-}) => {
+export const ScreenLayout: FC<ScreenLayoutProps> = ({ children, title }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const close = useCallback(() => setIsDrawerOpen(false), []);
 
@@ -26,7 +22,7 @@ export const ScreenLayout: FC<ScreenLayoutProps> = ({
         {children}
       </SafeAreaView>
       <SideDrawer isOpen={isDrawerOpen} onClose={close}>
-        {drawerContent}
+        <DrawerContent onClose={close} />
       </SideDrawer>
     </View>
   );

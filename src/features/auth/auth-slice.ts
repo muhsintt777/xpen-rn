@@ -4,6 +4,8 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 import { AuthService } from '@/features/auth/auth-service';
+import { UserService } from '@/features/user/user-service';
+import type { User } from '@/features/user/user-types';
 import { AuthStorage } from '@/services/auth-storage';
 
 type AuthStatus = 'LOADING' | 'SUCCESS' | 'FAILED';
@@ -13,6 +15,7 @@ interface AuthState {
   isLoggingIn: boolean;
   isLoggedIn: boolean;
   status: AuthStatus;
+  user: User | null;
 }
 
 const initialState: AuthState = {
@@ -20,6 +23,7 @@ const initialState: AuthState = {
   isLoggingIn: false,
   isLoggedIn: false,
   status: 'LOADING',
+  user: null,
 };
 
 export const refreshAccessToken = createAsyncThunk(
@@ -38,6 +42,10 @@ export const login = createAsyncThunk(
     await AuthStorage.setRefreshToken(credentials.refreshToken);
     return credentials;
   },
+);
+
+export const fetchCurrentUser = createAsyncThunk('auth/fetchCurrentUser', () =>
+  UserService.getCurrentUser(),
 );
 
 export const logout = createAsyncThunk('auth/logout', async () => {
@@ -79,15 +87,23 @@ const loginBuilder = (builder: ActionReducerMapBuilder<AuthState>) => {
     });
 };
 
+const currentUserBuilder = (builder: ActionReducerMapBuilder<AuthState>) => {
+  builder.addCase(fetchCurrentUser.fulfilled, (state, action) => {
+    state.user = action.payload;
+  });
+};
+
 const logoutBuilder = (builder: ActionReducerMapBuilder<AuthState>) => {
   builder
     .addCase(logout.fulfilled, (state) => {
       state.accessToken = null;
       state.isLoggedIn = false;
+      state.user = null;
     })
     .addCase(logout.rejected, (state) => {
       state.accessToken = null;
       state.isLoggedIn = false;
+      state.user = null;
     });
 };
 
@@ -98,6 +114,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     refreshAccessTokenBuilder(builder);
     loginBuilder(builder);
+    currentUserBuilder(builder);
     logoutBuilder(builder);
   },
 });
