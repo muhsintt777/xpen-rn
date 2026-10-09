@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginScreen } from '@/features/auth/login-screen';
 import { CreateExpenseScreen } from '@/features/expense/create-expense-screen';
-import { HomeScreen } from '@/features/home/home-screem';
+import { HomeScreen } from '@/features/home/home-screen';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { refreshAccessToken, selectAuth } from '@/features/auth/auth-slice';
 
