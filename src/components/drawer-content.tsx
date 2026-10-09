@@ -9,6 +9,7 @@ import {
   selectAuth,
 } from '@/features/auth/auth-slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { version } from '../../package.json';
 import { COLORS, RADII, SPACING, TYPOGRAPHY } from '@/theme';
 
 type DrawerRoute = 'Home' | 'Settings';
@@ -80,6 +81,7 @@ export const DrawerContent: FC<DrawerContentProps> = ({ onClose }) => {
         })}
       </View>
 
+      <Text style={styles.version}>Version {version}</Text>
       <Pressable
         accessibilityRole="button"
         onPress={() => dispatch(logout())}
@@ -149,6 +151,12 @@ const styles = StyleSheet.create({
   itemTextActive: {
     color: COLORS.PRIMARY,
     fontWeight: '700',
+  },
+  version: {
+    ...TYPOGRAPHY.BODY_SMALL,
+    color: COLORS.TEXT_SECONDARY,
+    paddingHorizontal: SPACING.CARD_PADDING,
+    paddingBottom: SPACING.LABEL_BOTTOM,
   },
   logout: {
     borderRadius: RADII.CONTROL,
