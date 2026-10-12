@@ -2,6 +2,9 @@ apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
+// Single source of truth for the app version is package.json.
+def packageJson = new groovy.json.JsonSlurper().parse(file("../../package.json"))
+
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -82,8 +85,8 @@ android {
         applicationId "com.xpenapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode packageJson.versionCode as int
+        versionName packageJson.version
     }
     signingConfigs {
         debug {

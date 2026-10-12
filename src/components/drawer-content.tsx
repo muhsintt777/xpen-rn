@@ -1,5 +1,6 @@
 import { FC, useEffect } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { AppStackParamList } from '@/app/app-navigator';
@@ -9,7 +10,6 @@ import {
   selectAuth,
 } from '@/features/auth/auth-slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { version } from '../../package.json';
 import { COLORS, RADII, SPACING, TYPOGRAPHY } from '@/theme';
 
 type DrawerRoute = 'Home' | 'Settings';
@@ -81,7 +81,7 @@ export const DrawerContent: FC<DrawerContentProps> = ({ onClose }) => {
         })}
       </View>
 
-      <Text style={styles.version}>Version {version}</Text>
+      <Text style={styles.version}>Version {DeviceInfo.getVersion()}</Text>
       <Pressable
         accessibilityRole="button"
         onPress={() => dispatch(logout())}
