@@ -1,11 +1,12 @@
 import { KeyboardAvoidingView, Platform, ScrollView, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import type { AppStackParamList } from '@/app/app-navigator';
 import { FormField } from '@/components/form-field';
 import { OptionChips } from '@/components/option-chips';
 import { PrimaryButton } from '@/components/primary-button';
-import { useCreateExpense } from './create-expense-hooks';
-import { styles } from './create-expense-screen-styles';
+import { useExpenseForm } from './expense-form-hooks';
+import { styles } from './expense-form-screen-styles';
 import { ExpenseType } from './expense-types';
 
 const TYPE_OPTIONS: { label: string; value: ExpenseType }[] = [
@@ -14,9 +15,10 @@ const TYPE_OPTIONS: { label: string; value: ExpenseType }[] = [
   { label: 'Save', value: 'SAVE' },
 ];
 
-export const CreateExpenseScreen = () => {
+export const ExpenseFormScreen = () => {
   const navigation = useNavigation();
-  const form = useCreateExpense(() => navigation.goBack());
+  const { params } = useRoute<RouteProp<AppStackParamList, 'ExpenseForm'>>();
+  const form = useExpenseForm(params?.expense, () => navigation.goBack());
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -28,7 +30,9 @@ export const CreateExpenseScreen = () => {
           contentContainerStyle={styles.content}
           keyboardShouldPersistTaps="handled"
         >
-          <Text style={styles.title}>Add expense</Text>
+          <Text style={styles.title}>
+            {form.isEditing ? 'Edit expense' : 'Add expense'}
+          </Text>
           <FormField
             disabled={form.isSaving}
             label="Amount"

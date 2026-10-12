@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginScreen } from '@/features/auth/login-screen';
-import { CreateExpenseScreen } from '@/features/expense/create-expense-screen';
+import { ExpenseFormScreen } from '@/features/expense/expense-form-screen';
+import type { Expense } from '@/features/expense/expense-types';
 import { HomeScreen } from '@/features/home/home-screen';
 import { SettingsScreen } from '@/features/settings/settings-screen';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -14,7 +15,7 @@ type AuthStackParamList = {
 
 export type AppStackParamList = {
   Home: undefined;
-  CreateExpense: undefined;
+  ExpenseForm: { expense?: Expense } | undefined;
   Settings: undefined;
 };
 
@@ -41,10 +42,7 @@ export const AppNavigator = () => {
         >
           <AppStack.Screen name="Home" component={HomeScreen} />
           <AppStack.Screen name="Settings" component={SettingsScreen} />
-          <AppStack.Screen
-            name="CreateExpense"
-            component={CreateExpenseScreen}
-          />
+          <AppStack.Screen name="ExpenseForm" component={ExpenseFormScreen} />
         </AppStack.Navigator>
       ) : (
         <AuthStack.Navigator

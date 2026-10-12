@@ -1,5 +1,10 @@
 import { api } from '@/services/api';
-import { CreateExpensePayload, ExpensePage } from './expense-types';
+import {
+  CreateExpensePayload,
+  Expense,
+  ExpensePage,
+  UpdateExpensePayload,
+} from './expense-types';
 
 export class ExpenseService {
   private static readonly PREFIX = '/expense';
@@ -13,5 +18,9 @@ export class ExpenseService {
 
   static async create(payload: CreateExpensePayload) {
     await api.post(this.PREFIX, payload);
+  }
+
+  static async update(id: Expense['id'], payload: UpdateExpensePayload) {
+    await api.put(`${this.PREFIX}/${id}`, payload);
   }
 }

@@ -21,6 +21,13 @@ export interface ExpensePage {
   pagination: ExpensePagination;
 }
 
+export interface UpdateExpensePayload {
+  amount: number;
+  categoryId: string;
+  note: string;
+  type: ExpenseType;
+}
+
 export interface CreateExpensePayload {
   amount: number;
   categoryId: string;

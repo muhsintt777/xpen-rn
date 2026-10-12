@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { COLORS, RADII, SPACING, TYPOGRAPHY } from '@/theme';
 import { Expense, ExpenseType } from '@/features/expense/expense-types';
 
@@ -17,14 +17,15 @@ const TYPE_LABELS: Record<ExpenseType, string> = {
 
 interface ExpenseItemProps {
   expense: Expense;
+  onPress?: () => void;
 }
 
-export const ExpenseItem: FC<ExpenseItemProps> = ({ expense }) => {
+export const ExpenseItem: FC<ExpenseItemProps> = ({ expense, onPress }) => {
   const { amount, categoryName, note, type } = expense;
   const typeColor = TYPE_COLORS[type] ?? COLORS.TEXT_SECONDARY;
 
   return (
-    <View style={styles.card}>
+    <Pressable accessibilityRole="button" onPress={onPress} style={styles.card}>
       <View style={styles.details}>
         <Text numberOfLines={1} style={styles.category}>
           {categoryName}
@@ -41,7 +42,7 @@ export const ExpenseItem: FC<ExpenseItemProps> = ({ expense }) => {
         </View>
       </View>
       <Text style={styles.amount}>{Number(amount).toFixed(2)}</Text>
-    </View>
+    </Pressable>
   );
 };
 

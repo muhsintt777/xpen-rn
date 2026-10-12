@@ -35,11 +35,18 @@ export const HomeScreen = () => {
         onEndReachedThreshold={0.5}
         onRefresh={refresh}
         refreshing={isRefreshing}
-        renderItem={({ item }) => <ExpenseItem expense={item} />}
+        renderItem={({ item }) => (
+          <ExpenseItem
+            expense={item}
+            onPress={() =>
+              navigation.navigate('ExpenseForm', { expense: item })
+            }
+          />
+        )}
       />
       <Fab
         accessibilityLabel="Add expense"
-        onPress={() => navigation.navigate('CreateExpense')}
+        onPress={() => navigation.navigate('ExpenseForm')}
       />
     </ScreenLayout>
   );
