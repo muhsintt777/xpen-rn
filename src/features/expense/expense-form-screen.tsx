@@ -1,4 +1,10 @@
-import { KeyboardAvoidingView, Platform, ScrollView, Text } from 'react-native';
+import {
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import type { AppStackParamList } from '@/app/app-navigator';
@@ -48,6 +54,7 @@ export const ExpenseFormScreen = () => {
             options={TYPE_OPTIONS}
             value={form.type}
           />
+          {form.isLoadingCategories && <ActivityIndicator />}
           <OptionChips
             disabled={form.isSaving}
             label="Category"

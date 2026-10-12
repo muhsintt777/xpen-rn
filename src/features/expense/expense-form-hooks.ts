@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Alert, Keyboard } from 'react-native';
-import { CategoryService } from '@/features/category/category-service';
-import { Category } from '@/features/category/category-types';
+import {
+  fetchCategories,
+  selectCategories,
+  selectCategoriesStatus,
+} from '@/features/category/category-slice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { ExpenseService } from './expense-service';
 import { Expense, ExpenseType } from './expense-types';
 
@@ -10,7 +14,9 @@ export const useExpenseForm = (
   onSaved: () => void,
 ) => {
   const isEditing = !!expense;
-  const [categories, setCategories] = useState<Category[]>([]);
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector(selectCategories);
+  const categoriesStatus = useAppSelector(selectCategoriesStatus);
   const [amount, setAmount] = useState(expense?.amount ?? '');
   const [note, setNote] = useState(expense?.note ?? '');
   const [type, setType] = useState<ExpenseType | null>(expense?.type ?? null);
@@ -19,13 +25,10 @@ export const useExpenseForm = (
   );
   const [isSaving, setIsSaving] = useState(false);
 
+  // No-op when cached or already loading; retries if the startup fetch failed.
   useEffect(() => {
-    CategoryService.list()
-      .then(setCategories)
-      .catch(() =>
-        Alert.alert('Error', 'Could not load categories. Please try again.'),
-      );
-  }, []);
+    dispatch(fetchCategories());
+  }, [dispatch]);
 
   const handleSave = async () => {
     const parsedAmount = Number(amount);
@@ -67,6 +70,7 @@ export const useExpenseForm = (
   return {
     amount,
     categories,
+    isLoadingCategories: categoriesStatus === 'LOADING',
     categoryId,
     handleSave,
     isEditing,

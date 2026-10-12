@@ -8,6 +8,7 @@ import { HomeScreen } from '@/features/home/home-screen';
 import { SettingsScreen } from '@/features/settings/settings-screen';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { refreshAccessToken, selectAuth } from '@/features/auth/auth-slice';
+import { fetchCategories } from '@/features/category/category-slice';
 
 type AuthStackParamList = {
   Login: undefined;
@@ -29,6 +30,12 @@ export const AppNavigator = () => {
   useEffect(() => {
     dispatch(refreshAccessToken());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(fetchCategories());
+    }
+  }, [dispatch, isLoggedIn]);
 
   return (
     <NavigationContainer>
