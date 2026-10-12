@@ -18,14 +18,24 @@ const TYPE_LABELS: Record<ExpenseType, string> = {
 interface ExpenseItemProps {
   expense: Expense;
   onPress?: () => void;
+  onLongPress?: () => void;
 }
 
-export const ExpenseItem: FC<ExpenseItemProps> = ({ expense, onPress }) => {
+export const ExpenseItem: FC<ExpenseItemProps> = ({
+  expense,
+  onPress,
+  onLongPress,
+}) => {
   const { amount, categoryName, note, type } = expense;
   const typeColor = TYPE_COLORS[type] ?? COLORS.TEXT_SECONDARY;
 
   return (
-    <Pressable accessibilityRole="button" onPress={onPress} style={styles.card}>
+    <Pressable
+      accessibilityRole="button"
+      onLongPress={onLongPress}
+      onPress={onPress}
+      style={styles.card}
+    >
       <View style={styles.details}>
         <Text numberOfLines={1} style={styles.category}>
           {categoryName}

@@ -23,4 +23,8 @@ export class ExpenseService {
   static async update(id: Expense['id'], payload: UpdateExpensePayload) {
     await api.put(`${this.PREFIX}/${id}`, payload);
   }
+
+  static async remove(id: Expense['id']) {
+    await api.delete(`${this.PREFIX}/${id}`);
+  }
 }

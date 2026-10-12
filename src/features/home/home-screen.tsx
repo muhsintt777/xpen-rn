@@ -13,8 +13,15 @@ const Separator = () => <View style={styles.separator} />;
 export const HomeScreen = () => {
   const navigation =
     useNavigation<StackNavigationProp<AppStackParamList, 'Home'>>();
-  const { error, expenses, isLoading, isRefreshing, loadMore, refresh } =
-    useExpenses();
+  const {
+    confirmDelete,
+    error,
+    expenses,
+    isLoading,
+    isRefreshing,
+    loadMore,
+    refresh,
+  } = useExpenses();
 
   return (
     <ScreenLayout title="Expenses">
@@ -38,6 +45,7 @@ export const HomeScreen = () => {
         renderItem={({ item }) => (
           <ExpenseItem
             expense={item}
+            onLongPress={() => confirmDelete(item)}
             onPress={() =>
               navigation.navigate('ExpenseForm', { expense: item })
             }

@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import { useCallback, useRef, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { ExpenseService } from './expense-service';
@@ -46,7 +47,26 @@ export const useExpenses = () => {
     }, [load]),
   );
 
+  const confirmDelete = useCallback((expense: Expense) => {
+    Alert.alert('Delete expense', 'This expense will be permanently deleted.', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            await ExpenseService.remove(expense.id);
+            setExpenses((prev) => prev.filter((e) => e.id !== expense.id));
+          } catch {
+            Alert.alert('Delete failed', 'Could not delete the expense.');
+          }
+        },
+      },
+    ]);
+  }, []);
+
   return {
+    confirmDelete,
     error,
     expenses,
     isLoading,
