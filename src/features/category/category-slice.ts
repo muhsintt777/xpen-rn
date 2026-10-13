@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { logout } from '@/features/auth/auth-slice';
+import { clearAuthSession, logout } from '@/features/auth/auth-slice';
 import { CategoryService } from './category-service';
 import { Category } from './category-types';
 
@@ -41,7 +41,8 @@ const categorySlice = createSlice({
         state.status = 'FAILED';
       })
       .addCase(logout.fulfilled, resetState)
-      .addCase(logout.rejected, resetState);
+      .addCase(logout.rejected, resetState)
+      .addCase(clearAuthSession, resetState);
   },
 });
 

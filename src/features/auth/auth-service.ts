@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { ENV } from '@/configs/env';
 import { api } from '@/services/api';
 
 interface RegisterPayload {
@@ -6,7 +8,7 @@ interface RegisterPayload {
   fullname: string;
 }
 
-interface LoginResponse {
+interface Tokens {
   accessToken: string;
   refreshToken: string;
 }
@@ -16,12 +18,22 @@ export class AuthService {
 
   static async login(email: string, password: string) {
     const res = await api.post(`${this.PREFIX}/login`, { email, password });
-    return res.data?.data as LoginResponse;
+    return res.data?.data as Tokens;
   }
 
-  static async refresh(refreshToken: string): Promise<string> {
-    const res = await api.post(`${this.PREFIX}/refresh`, { refreshToken });
-    return res.data?.data;
+  static async refresh(refreshToken: string): Promise<Tokens> {
+    const res = await axios.post(
+      `${ENV.API_BASE_URL}${this.PREFIX}/refresh`,
+      { refreshToken },
+      {
+        timeout: 15_000,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    return res.data?.data as Tokens;
   }
 
   static async register(payload: RegisterPayload) {

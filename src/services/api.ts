@@ -1,7 +1,10 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { ENV } from '@/configs/env';
 import { store } from '@/store';
-import { refreshAccessToken } from '@/features/auth/auth-slice';
+import {
+  clearLocalSession,
+  refreshAccessToken,
+} from '@/features/auth/auth-slice';
 
 interface RetryableRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
@@ -24,20 +27,33 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Serializes concurrent refresh attempts so only one refresh call is in flight at a time.
-let refreshPromise: Promise<string> | null = null;
+let refreshPromise: Promise<{ accessToken: string }> | null = null;
+
+const refreshAccessTokenOnce = () => {
+  if (!refreshPromise) {
+    refreshPromise = store
+      .dispatch(refreshAccessToken())
+      .unwrap()
+      .finally(() => {
+        refreshPromise = null;
+      });
+  }
+  return refreshPromise;
+};
 
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError<{ errorType?: string }>) => {
     const originalRequest = error.config as RetryableRequestConfig | undefined;
-    const isTokenExpired =
-      error.response?.data?.errorType === 'AUTH_TOKEN_EXPIRED';
-    const isRefreshCall = originalRequest?.url?.includes('/auth/refresh');
+    const errorType = error.response?.data?.errorType;
+
+    if (errorType === 'SIGNED_OUT') {
+      store.dispatch(clearLocalSession());
+      return Promise.reject(error);
+    }
 
     if (
-      !isTokenExpired ||
-      isRefreshCall ||
+      errorType !== 'AUTH_TOKEN_EXPIRED' ||
       !originalRequest ||
       originalRequest._retry
     ) {
@@ -47,14 +63,17 @@ api.interceptors.response.use(
     originalRequest._retry = true;
 
     try {
-      refreshPromise ??= store.dispatch(refreshAccessToken()).unwrap();
-      const accessToken = await refreshPromise;
+      const currentToken = store.getState().auth.accessToken;
+      const failedWithToken = originalRequest.headers.Authorization;
+      const accessToken =
+        currentToken && failedWithToken !== `Bearer ${currentToken}`
+          ? currentToken
+          : (await refreshAccessTokenOnce()).accessToken;
+
       originalRequest.headers.Authorization = `Bearer ${accessToken}`;
       return api(originalRequest);
     } catch (refreshError) {
       return Promise.reject(refreshError);
-    } finally {
-      refreshPromise = null;
     }
   },
 );

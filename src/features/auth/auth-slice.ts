@@ -1,5 +1,6 @@
 import {
   ActionReducerMapBuilder,
+  createAction,
   createAsyncThunk,
   createSlice,
 } from '@reduxjs/toolkit';
@@ -26,14 +27,27 @@ const initialState: AuthState = {
   user: null,
 };
 
+export const clearAuthSession = createAction('auth/clearSession');
+
+export const clearLocalSession = createAsyncThunk(
+  'auth/clearLocalSession',
+  async (_, { dispatch }) => {
+    dispatch(clearAuthSession());
+    await AuthStorage.clearTokens();
+  },
+);
+
 export const refreshAccessToken = createAsyncThunk(
   'auth/restoreSession',
-  async () => {
+  async (_, { dispatch }) => {
     try {
       const refreshToken = await AuthStorage.getRefreshToken();
-      return await AuthService.refresh(refreshToken);
+      const tokens = await AuthService.refresh(refreshToken);
+      await AuthStorage.setRefreshToken(tokens.refreshToken);
+      return tokens;
     } catch (error) {
-      // Drop the stored refresh token so the user is fully signed out.
+      // A failed refresh invalidates the local session and cached user data.
+      dispatch(clearAuthSession());
       await AuthStorage.clearTokens();
       throw error;
     }
@@ -66,7 +80,7 @@ const refreshAccessTokenBuilder = (
 ) => {
   builder
     .addCase(refreshAccessToken.fulfilled, (state, action) => {
-      state.accessToken = action.payload;
+      state.accessToken = action.payload.accessToken;
       state.isLoggedIn = true;
       state.status = 'SUCCESS';
     })
@@ -124,6 +138,12 @@ const authSlice = createSlice({
     loginBuilder(builder);
     currentUserBuilder(builder);
     logoutBuilder(builder);
+    builder.addCase(clearAuthSession, (state) => {
+      state.accessToken = null;
+      state.isLoggedIn = false;
+      state.user = null;
+      state.status = 'FAILED';
+    });
   },
 });
 
