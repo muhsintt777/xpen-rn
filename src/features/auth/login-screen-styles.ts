@@ -90,4 +90,7 @@ export const styles = StyleSheet.create({
     paddingBottom: SPACING.FOOTER_BOTTOM,
     textAlign: 'center',
   },
+  footerAction: {
+    color: COLORS.PRIMARY,
+  },
 });

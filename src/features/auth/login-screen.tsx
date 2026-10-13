@@ -6,8 +6,12 @@ import {
   StatusBar,
   Text,
   View,
+  Pressable,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import type { AuthStackParamList } from '@/app/app-navigator';
 import { styles } from '@/features/auth/login-screen-styles';
 import { PrimaryButton } from '@/components/primary-button';
 import { FormField } from '@/components/form-field';
@@ -15,6 +19,8 @@ import { useLogin } from '@/features/auth/auth-hooks';
 import { COLORS } from '@/theme';
 
 export const LoginScreen = () => {
+  const navigation =
+    useNavigation<StackNavigationProp<AuthStackParamList, 'Login'>>();
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const { email, handleLogin, isLoggingIn, password, setEmail, setPassword } =
     useLogin();
@@ -99,7 +105,16 @@ export const LoginScreen = () => {
           </View>
         </View>
 
-        <Text style={styles.footer}>New to xpen? Create an account</Text>
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => navigation.navigate('Signup')}
+          style={styles.footer}
+        >
+          <Text style={styles.footer}>
+            New to xpen?{' '}
+            <Text style={styles.footerAction}>Create an account</Text>
+          </Text>
+        </Pressable>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
