@@ -1,97 +1,109 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Xpen
 
-# Getting Started
+Xpen is a React Native expense-tracking app built with TypeScript. It supports account registration and sign-in, session restoration, and creating, editing, browsing, and deleting expenses classified as **Need**, **Want**, or **Save**.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+The app is structured around feature ownership: screens and feature logic live together, while shared navigation, API access, state setup, and reusable UI components have clear application-level boundaries.
 
-## Step 1: Start Metro
+## Engineering Highlights
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+- **Feature-oriented modules:** authentication, categories, expenses, home, settings, and user data are separated under `src/features`. Screens delegate business actions to feature hooks and service classes.
+- **Typed application state:** Redux Toolkit owns shared authentication and category state; typed store hooks and domain interfaces keep UI, service, and API contracts aligned.
+- **Centralized authenticated networking:** a shared Axios client applies the access token, enforces a request timeout, and retries expired-token responses after refreshing credentials. Concurrent failures share one refresh request.
+- **Explicit session lifecycle:** the app restores a session at startup, persists the refresh token with AsyncStorage, and clears authentication and cached categories when a session ends or becomes invalid.
+- **Cursor-based expense loading:** the home screen requests expenses in pages, prevents overlapping fetches, supports pull-to-refresh and load-more, and refreshes when returning to the screen.
+- **Resilient category loading:** categories are cached in Redux, duplicate in-flight requests are skipped, and failed loads can be retried from the expense form.
+- **Reusable UI and design tokens:** shared form, button, layout, navigation, and expense components use centralized theme values in `src/theme`.
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## Architecture
+
+```mermaid
+flowchart TD
+		Screens[Navigation and feature screens] --> Hooks[Feature hooks]
+		Hooks --> Store[Redux Toolkit store]
+		Hooks --> Services[Feature services]
+		Services --> API[Axios API client]
+		API --> Backend[Expense API]
+		API --> Auth[Auth refresh flow]
+		Auth --> Storage[AsyncStorage refresh token]
+```
+
+The API client owns shared transport concerns; feature services translate app operations into endpoint calls; hooks coordinate UI state, validation, and side effects. The navigation tree switches between the authentication flow and the signed-in app flow based on restored Redux auth state.
+
+### Source Layout
+
+```text
+src/
+	app/          App composition and typed navigation stacks
+	components/   Reusable UI building blocks
+	configs/      Runtime configuration, including the API base URL
+	features/     Auth, category, expense, home, settings, and user modules
+	services/     Shared API client and refresh-token storage
+	store/        Redux store and typed hooks
+	theme/        Colors, spacing, typography, sizes, and radii
+```
+
+## Technology
+
+- React Native 0.85 and React 19
+- TypeScript
+- Redux Toolkit and React Redux
+- React Navigation
+- Axios
+- AsyncStorage
+- Jest and the React Native Jest preset
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 22.11 or later
+- Yarn (the repository includes `yarn.lock`) or npm
+- Android Studio and an Android emulator/device for Android development
+- macOS, Xcode, Ruby, and CocoaPods for iOS development
+
+Install JavaScript dependencies:
 
 ```sh
-# Using npm
-npm start
+yarn install
+```
 
-# OR using Yarn
+Set the backend URL in [`src/configs/env.ts`](src/configs/env.ts) before running the app if you are using a different API deployment.
+
+### Run on Android
+
+Start Metro in one terminal:
+
+```sh
 yarn start
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
+In another terminal, build and install the app:
 
 ```sh
-# Using npm
-npm run android
-
-# OR using Yarn
 yarn android
 ```
 
-### iOS
+### Run on iOS
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+Install CocoaPods dependencies, then launch the app:
 
 ```sh
 bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
 bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
 yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## Development Commands
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+| Command              | Purpose                                              |
+| -------------------- | ---------------------------------------------------- |
+| `yarn start`         | Start Metro                                          |
+| `yarn start:reset`   | Start Metro with a cleared cache                     |
+| `yarn lint`          | Run ESLint                                           |
+| `yarn test`          | Run Jest                                             |
+| `yarn build`         | Assemble an Android debug build                      |
+| `yarn build:release` | Assemble an Android release build                    |
+| `yarn clean`         | Clean Android build outputs                          |
+| `yarn adb:reverse`   | Forward the Metro port to a connected Android device |
 
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+The project also exposes the corresponding npm scripts (for example, `npm run lint` and `npm test`).
