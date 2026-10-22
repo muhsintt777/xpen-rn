@@ -7,7 +7,7 @@ import type { AppStackParamList } from './navigation-types';
 import { logout } from '@/modules/auth/state';
 import { fetchCurrentUser, selectCurrentUser } from '@/modules/user';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { COLORS, RADII, SPACING, TYPOGRAPHY } from '@/theme';
+import { COLORS, RADII, SPACING, TYPOGRAPHY } from '@/shared/theme';
 
 type DrawerRoute = 'Home' | 'Settings';
 

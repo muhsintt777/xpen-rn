@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { COLORS, SPACING, TYPOGRAPHY } from '@/theme';
+import { COLORS, SPACING, TYPOGRAPHY } from '@/shared/theme';
 
 interface AppBarProps {
   title: string;

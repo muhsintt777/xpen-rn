@@ -3,12 +3,7 @@ module.exports = {
   extends: '@react-native',
   overrides: [
     {
-      files: [
-        'src/components/**/*.{ts,tsx}',
-        'src/configs/**/*.{ts,tsx}',
-        'src/services/**/*.{ts,tsx}',
-        'src/theme/**/*.{ts,tsx}',
-      ],
+      files: ['src/shared/**/*.{ts,tsx}'],
       rules: {
         'no-restricted-imports': ['error', { patterns: ['@/modules/**'] }],
       },

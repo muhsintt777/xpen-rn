@@ -13,10 +13,10 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { AuthStackParamList } from '@/app/navigation-types';
 import { styles } from '@/modules/auth/login-screen-styles';
-import { PrimaryButton } from '@/components/primary-button';
-import { FormField } from '@/components/form-field';
+import { PrimaryButton } from '@/shared/components/primary-button';
+import { FormField } from '@/shared/components/form-field';
 import { useLogin } from '@/modules/auth/auth-hooks';
-import { COLORS } from '@/theme';
+import { COLORS } from '@/shared/theme';
 
 export const LoginScreen = () => {
   const navigation =

@@ -4,7 +4,7 @@ import { ExpenseItem } from '@/modules/expense';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { AppStackParamList } from '@/app/navigation-types';
-import { Fab } from '@/components/fab';
+import { Fab } from '@/shared/components/fab';
 import { useExpenses } from '@/modules/expense';
 import { styles } from './home-screen-styles';
 

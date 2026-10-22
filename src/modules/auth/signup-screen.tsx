@@ -15,11 +15,11 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { FormField } from '@/components/form-field';
-import { PrimaryButton } from '@/components/primary-button';
+import { FormField } from '@/shared/components/form-field';
+import { PrimaryButton } from '@/shared/components/primary-button';
 import type { AuthStackParamList } from '@/app/navigation-types';
 import { AuthService } from '@/modules/auth/auth-service';
-import { COLORS, RADII, SIZES, SPACING, TYPOGRAPHY } from '@/theme';
+import { COLORS, RADII, SIZES, SPACING, TYPOGRAPHY } from '@/shared/theme';
 
 export const SignupScreen = () => {
   const navigation =

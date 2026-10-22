@@ -8,9 +8,9 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import type { AppStackParamList } from '@/app/navigation-types';
-import { FormField } from '@/components/form-field';
-import { OptionChips } from '@/components/option-chips';
-import { PrimaryButton } from '@/components/primary-button';
+import { FormField } from '@/shared/components/form-field';
+import { OptionChips } from '@/shared/components/option-chips';
+import { PrimaryButton } from '@/shared/components/primary-button';
 import { useExpenseForm } from './expense-form-hooks';
 import { styles } from './expense-form-screen-styles';
 import { ExpenseType } from './expense-types';

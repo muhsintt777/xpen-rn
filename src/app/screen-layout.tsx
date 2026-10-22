@@ -1,9 +1,9 @@
 import { FC, ReactNode, useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { AppBar } from '@/components/app-bar';
-import { SideDrawer } from '@/components/side-drawer';
-import { COLORS } from '@/theme';
+import { AppBar } from '@/shared/components/app-bar';
+import { SideDrawer } from '@/shared/components/side-drawer';
+import { COLORS } from '@/shared/theme';
 import { DrawerContent } from './drawer-content';
 
 interface ScreenLayoutProps {

@@ -1,4 +1,4 @@
-import { api } from '@/services/api';
+import { api } from '@/shared/services/api';
 import { Category } from './category-types';
 
 export class CategoryService {

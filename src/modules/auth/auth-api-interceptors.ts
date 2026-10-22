@@ -1,5 +1,5 @@
 import type { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { api } from '@/services/api';
+import { api } from '@/shared/services/api';
 import { store } from '@/store';
 import { clearLocalSession, refreshAccessToken } from './auth-slice';
 

@@ -9,10 +9,10 @@ The app is structured around feature ownership: screens and feature logic live t
 - **Feature-oriented modules:** authentication, categories, expenses, home, settings, and user data are separated under `src/modules`. Screens delegate business actions to feature hooks and service classes.
 - **Explicit state ownership:** Redux Toolkit owns auth session state, the current-user profile, and the shared category cache. Expense pages and form drafts remain local to their feature hooks because they are screen-scoped and focus-driven.
 - **Centralized authenticated networking:** a shared Axios client applies the access token, enforces a request timeout, and retries expired-token responses after refreshing credentials. Concurrent failures share one refresh request.
-- **Explicit session lifecycle:** the app restores a session at startup, persists the refresh token with AsyncStorage, and clears authentication and cached categories when a session ends or becomes invalid.
+- **Explicit session lifecycle:** the app restores a session at startup, persists the refresh token with AsyncStorage, and clears auth, user, and category state when a session ends or becomes invalid.
 - **Cursor-based expense loading:** the home screen requests expenses in pages, prevents overlapping fetches, supports pull-to-refresh and load-more, and refreshes when returning to the screen.
 - **Resilient category loading:** categories are cached in Redux, duplicate in-flight requests are skipped, and failed loads can be retried from the expense form.
-- **Reusable UI and design tokens:** shared form, button, layout, navigation, and expense components use centralized theme values in `src/theme`.
+- **Reusable UI and design tokens:** shared form, button, layout, and navigation components use centralized tokens in `src/shared/theme`.
 
 ## Architecture
 
@@ -33,13 +33,11 @@ The API client owns shared transport concerns; feature services translate app op
 
 ```text
 src/
-	app/          App composition and typed navigation stacks
-	components/   Reusable UI building blocks
-	configs/      Runtime configuration, including the API base URL
-	modules/     Auth, category, expense, home, settings, and user modules
-	services/     Shared API client and refresh-token storage
-	store/        Redux store and typed hooks
-	theme/        Colors, spacing, typography, sizes, and radii
+  app/          App composition and typed navigation stacks
+  modules/      Auth, category, expense, home, settings, and user features
+    auth/       Includes auth-specific refresh-token storage
+  shared/       Reusable UI, design tokens, runtime config, and API transport
+  store/        Redux store and typed hooks
 ```
 
 ## Technology
@@ -67,7 +65,7 @@ Install JavaScript dependencies:
 yarn install
 ```
 
-Set the backend URL in [`src/configs/env.ts`](src/configs/env.ts) before running the app if you are using a different API deployment.
+Set the backend URL in [`src/shared/config/env.ts`](src/shared/config/env.ts) before running the app if you are using a different API deployment.
 
 ### Run on Android
 

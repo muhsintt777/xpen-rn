@@ -1,5 +1,5 @@
 import { StyleSheet, Pressable, Text, View } from 'react-native';
-import { COLORS, RADII, SPACING, TYPOGRAPHY } from '@/theme';
+import { COLORS, RADII, SPACING, TYPOGRAPHY } from '@/shared/theme';
 
 interface Option<T extends string> {
   label: string;

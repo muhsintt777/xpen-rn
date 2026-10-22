@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { ENV } from '@/configs/env';
-import { api } from '@/services/api';
+import { ENV } from '@/shared/config/env';
+import { api } from '@/shared/services/api';
 
 interface RegisterPayload {
   email: string;

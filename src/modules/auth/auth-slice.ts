@@ -3,8 +3,8 @@ import {
   createAsyncThunk,
   createSlice,
 } from '@reduxjs/toolkit';
-import { AuthStorage } from '@/services/auth-storage';
 import { sessionEnded } from '@/store/session-events';
+import { AuthStorage } from './auth-storage';
 import { AuthService } from './auth-service';
 
 type AuthStatus = 'LOADING' | 'SUCCESS' | 'FAILED';

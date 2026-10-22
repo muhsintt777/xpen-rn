@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { COLORS } from '@/theme';
+import { COLORS } from '@/shared/theme';
 
 const DRAWER_WIDTH_RATIO = 0.9;
 const ANIMATION_MS = 250;

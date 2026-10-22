@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
-import { COLORS, SPACING } from '@/theme';
+import { COLORS, SPACING } from '@/shared/theme';
 
 interface FabProps {
   accessibilityLabel: string;
