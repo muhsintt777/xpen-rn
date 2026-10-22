@@ -1,6 +1,7 @@
 ## GitHub Copilot Custom Instructions
 
 - Dont over engineer
+- Follow modular architecture
 - Use yarn for package management
 
 ### Git
