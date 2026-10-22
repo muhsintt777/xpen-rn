@@ -5,7 +5,7 @@ import {
   selectCategories,
   selectCategoriesStatus,
 } from '@/modules/category';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { ExpenseService } from './expense-service';
 import { Expense, ExpenseType } from './expense-types';
 

@@ -3,7 +3,7 @@ import {
   createAsyncThunk,
   createSlice,
 } from '@reduxjs/toolkit';
-import { sessionEnded } from '@/store/session-events';
+import { sessionEnded } from '@/shared/events/session-events';
 import { AuthStorage } from './auth-storage';
 import { AuthService } from './auth-service';
 

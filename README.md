@@ -34,10 +34,10 @@ The API client owns shared transport concerns; feature services translate app op
 ```text
 src/
   app/          App composition and typed navigation stacks
+		store/      Root Redux store and typed hooks
   modules/      Auth, category, expense, home, settings, and user features
     auth/       Includes auth-specific refresh-token storage
-  shared/       Reusable UI, design tokens, runtime config, and API transport
-  store/        Redux store and typed hooks
+	shared/       Reusable UI, design tokens, runtime config, events, and API transport
 ```
 
 ## Technology

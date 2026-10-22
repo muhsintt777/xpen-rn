@@ -6,7 +6,7 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import type { AppStackParamList } from './navigation-types';
 import { logout } from '@/modules/auth/state';
 import { fetchCurrentUser, selectCurrentUser } from '@/modules/user';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { COLORS, RADII, SPACING, TYPOGRAPHY } from '@/shared/theme';
 
 type DrawerRoute = 'Home' | 'Settings';

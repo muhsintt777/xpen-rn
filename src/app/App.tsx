@@ -2,7 +2,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { AppNavigator } from '@/app/app-navigator';
 import { configureAuthApiInterceptors } from '@/modules/auth';
-import { store } from '@/store';
+import { store } from '@/app/store';
 
 configureAuthApiInterceptors();
 

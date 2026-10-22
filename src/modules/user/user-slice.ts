@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { sessionEnded } from '@/store/session-events';
+import { sessionEnded } from '@/shared/events/session-events';
 import { UserService } from './user-service';
 import type { User } from './user-types';
 

@@ -6,7 +6,7 @@ import { ExpenseFormScreen } from '@/modules/expense';
 import { HomeScreen } from '@/modules/home';
 import { SettingsScreen } from '@/modules/settings';
 import type { AppStackParamList, AuthStackParamList } from './navigation-types';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { refreshAccessToken, selectAuth } from '@/modules/auth/state';
 import { fetchCategories } from '@/modules/category';
 

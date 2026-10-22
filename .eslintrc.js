@@ -9,8 +9,8 @@ module.exports = {
       },
     },
     {
-      files: ['src/store/**/*.{ts,tsx}'],
-      excludedFiles: ['src/store/index.ts'],
+      files: ['src/app/store/**/*.{ts,tsx}'],
+      excludedFiles: ['src/app/store/index.ts'],
       rules: {
         'no-restricted-imports': ['error', { patterns: ['@/modules/**'] }],
       },
