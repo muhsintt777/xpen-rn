@@ -4,7 +4,8 @@ import DeviceInfo from 'react-native-device-info';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { AppStackParamList } from './navigation-types';
-import { fetchCurrentUser, logout, selectAuth } from '@/modules/auth/state';
+import { logout } from '@/modules/auth/state';
+import { fetchCurrentUser, selectCurrentUser } from '@/modules/user';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { COLORS, RADII, SPACING, TYPOGRAPHY } from '@/theme';
 
@@ -21,7 +22,7 @@ interface DrawerContentProps {
 
 export const DrawerContent: FC<DrawerContentProps> = ({ onClose }) => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector(selectAuth);
+  const user = useAppSelector(selectCurrentUser);
   const navigation = useNavigation<StackNavigationProp<AppStackParamList>>();
   const { name: activeRoute } = useRoute();
 

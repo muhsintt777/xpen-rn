@@ -7,7 +7,7 @@ The app is structured around feature ownership: screens and feature logic live t
 ## Engineering Highlights
 
 - **Feature-oriented modules:** authentication, categories, expenses, home, settings, and user data are separated under `src/modules`. Screens delegate business actions to feature hooks and service classes.
-- **Typed application state:** Redux Toolkit owns shared authentication and category state; typed store hooks and domain interfaces keep UI, service, and API contracts aligned.
+- **Explicit state ownership:** Redux Toolkit owns auth session state, the current-user profile, and the shared category cache. Expense pages and form drafts remain local to their feature hooks because they are screen-scoped and focus-driven.
 - **Centralized authenticated networking:** a shared Axios client applies the access token, enforces a request timeout, and retries expired-token responses after refreshing credentials. Concurrent failures share one refresh request.
 - **Explicit session lifecycle:** the app restores a session at startup, persists the refresh token with AsyncStorage, and clears authentication and cached categories when a session ends or becomes invalid.
 - **Cursor-based expense loading:** the home screen requests expenses in pages, prevents overlapping fetches, supports pull-to-refresh and load-more, and refreshes when returning to the screen.
@@ -27,7 +27,7 @@ flowchart TD
 		Auth --> Storage[AsyncStorage refresh token]
 ```
 
-The API client owns shared transport concerns; feature services translate app operations into endpoint calls; hooks coordinate UI state, validation, and side effects. The navigation tree switches between the authentication flow and the signed-in app flow based on restored Redux auth state.
+The API client owns shared transport concerns; feature services translate app operations into endpoint calls; hooks coordinate UI state, validation, and side effects. The root store composes reducers exported by the auth, category, and user modules. Auth owns session credentials and login state; user owns the authenticated profile; category owns the shared category cache. Expense pagination and form drafts stay local to expense hooks until another screen needs a shared cache or coordinated updates. The navigation tree switches between the authentication flow and the signed-in app flow based on restored Redux auth state.
 
 ### Source Layout
 

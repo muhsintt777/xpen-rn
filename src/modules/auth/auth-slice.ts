@@ -3,7 +3,6 @@ import {
   createAsyncThunk,
   createSlice,
 } from '@reduxjs/toolkit';
-import { UserService, type User } from '@/modules/user';
 import { AuthStorage } from '@/services/auth-storage';
 import { sessionEnded } from '@/store/session-events';
 import { AuthService } from './auth-service';
@@ -15,7 +14,6 @@ interface AuthState {
   isLoggingIn: boolean;
   isLoggedIn: boolean;
   status: AuthStatus;
-  user: User | null;
 }
 
 const initialState: AuthState = {
@@ -23,7 +21,6 @@ const initialState: AuthState = {
   isLoggingIn: false,
   isLoggedIn: false,
   status: 'LOADING',
-  user: null,
 };
 
 export const clearLocalSession = createAsyncThunk(
@@ -58,10 +55,6 @@ export const login = createAsyncThunk(
     await AuthStorage.setRefreshToken(credentials.refreshToken);
     return credentials;
   },
-);
-
-export const fetchCurrentUser = createAsyncThunk('auth/fetchCurrentUser', () =>
-  UserService.getCurrentUser(),
 );
 
 export const logout = createAsyncThunk(
@@ -113,12 +106,6 @@ const loginBuilder = (builder: ActionReducerMapBuilder<AuthState>) => {
     });
 };
 
-const currentUserBuilder = (builder: ActionReducerMapBuilder<AuthState>) => {
-  builder.addCase(fetchCurrentUser.fulfilled, (state, action) => {
-    state.user = action.payload;
-  });
-};
-
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -126,11 +113,9 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     refreshAccessTokenBuilder(builder);
     loginBuilder(builder);
-    currentUserBuilder(builder);
     builder.addCase(sessionEnded, (state) => {
       state.accessToken = null;
       state.isLoggedIn = false;
-      state.user = null;
       state.status = 'FAILED';
     });
   },
