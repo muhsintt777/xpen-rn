@@ -27,17 +27,6 @@ flowchart TD
     Shared --> External[Platform and backend]
 ```
 
-### Module Dependencies
-
-| Module     | Depends on    |
-| ---------- | ------------- |
-| `auth`     | none          |
-| `category` | none          |
-| `expense`  | `home`, `app` |
-| `home`     | `app`         |
-| `settings` | `app`         |
-| `user`     | none          |
-
 Cross-feature imports use public APIs, never another feature's implementation files. The root store is responsible for reducer registration; typed store hooks are the approved state-integration interface for features. `app` is the composition root, while `modules` and `shared` must not depend on it.
 
 The API client owns transport concerns; feature services translate operations into endpoint calls; feature hooks coordinate screen state, validation, and side effects. Auth owns session credentials and login state; user owns the current profile; category owns the shared category cache. Expense pagination and form drafts stay local to expense hooks because they are screen-scoped. ESLint enforces the shared and cross-feature import boundaries.
@@ -108,7 +97,7 @@ yarn ios
 | Command              | Purpose                                              |
 | -------------------- | ---------------------------------------------------- |
 | `yarn start`         | Start Metro                                          |
-| `yarn start:reset`   | Start Metro with a cleared cache                     |
+| `yarn start:rc`      | Start Metro with a cleared cache                     |
 | `yarn lint`          | Run ESLint                                           |
 | `yarn test`          | Run Jest                                             |
 | `yarn build`         | Assemble an Android debug build                      |
