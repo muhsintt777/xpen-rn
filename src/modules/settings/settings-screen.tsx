@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { ScreenLayout } from '@/components/screen-layout';
+import { ScreenLayout } from '@/app/screen-layout';
 import { COLORS, TYPOGRAPHY } from '@/theme';
 
 export const SettingsScreen = () => (

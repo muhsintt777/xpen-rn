@@ -1,3 +1,4 @@
+export { ExpenseItem } from './expense-item';
 export { ExpenseFormScreen } from './expense-form-screen';
 export { useExpenses } from './expense-hooks';
 export type {

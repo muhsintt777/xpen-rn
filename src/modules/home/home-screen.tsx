@@ -1,6 +1,6 @@
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
-import { ScreenLayout } from '@/components/screen-layout';
-import { ExpenseItem } from '@/components/expense-item';
+import { ScreenLayout } from '@/app/screen-layout';
+import { ExpenseItem } from '@/modules/expense';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { AppStackParamList } from '@/app/navigation-types';

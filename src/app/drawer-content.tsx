@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import type { AppStackParamList } from '@/app/navigation-types';
+import type { AppStackParamList } from './navigation-types';
 import { fetchCurrentUser, logout, selectAuth } from '@/modules/auth/state';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { COLORS, RADII, SPACING, TYPOGRAPHY } from '@/theme';
