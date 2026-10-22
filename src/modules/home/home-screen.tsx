@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { AppStackParamList } from '@/app/app-navigator';
 import { Fab } from '@/components/fab';
-import { useExpenses } from '@/features/expense/expense-hooks';
+import { useExpenses } from '@/modules/expense/expense-hooks';
 import { styles } from './home-screen-styles';
 
 const Separator = () => <View style={styles.separator} />;

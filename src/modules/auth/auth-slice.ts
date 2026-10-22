@@ -4,9 +4,9 @@ import {
   createAsyncThunk,
   createSlice,
 } from '@reduxjs/toolkit';
-import { AuthService } from '@/features/auth/auth-service';
-import { UserService } from '@/features/user/user-service';
-import type { User } from '@/features/user/user-types';
+import { AuthService } from '@/modules/auth/auth-service';
+import { UserService } from '@/modules/user/user-service';
+import type { User } from '@/modules/user/user-types';
 import { AuthStorage } from '@/services/auth-storage';
 
 type AuthStatus = 'LOADING' | 'SUCCESS' | 'FAILED';

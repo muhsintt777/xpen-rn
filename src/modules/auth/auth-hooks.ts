@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Alert, Keyboard } from 'react-native';
-import { selectAuth, login } from '@/features/auth/auth-slice';
+import { selectAuth, login } from '@/modules/auth/auth-slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 export const useLogin = () => {

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { COLORS, RADII, SPACING, TYPOGRAPHY } from '@/theme';
-import { Expense, ExpenseType } from '@/features/expense/expense-types';
+import { Expense, ExpenseType } from '@/modules/expense/expense-types';
 
 const TYPE_COLORS: Record<ExpenseType, string> = {
   NEED: COLORS.INFO,

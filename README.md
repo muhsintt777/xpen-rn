@@ -6,7 +6,7 @@ The app is structured around feature ownership: screens and feature logic live t
 
 ## Engineering Highlights
 
-- **Feature-oriented modules:** authentication, categories, expenses, home, settings, and user data are separated under `src/features`. Screens delegate business actions to feature hooks and service classes.
+- **Feature-oriented modules:** authentication, categories, expenses, home, settings, and user data are separated under `src/modules`. Screens delegate business actions to feature hooks and service classes.
 - **Typed application state:** Redux Toolkit owns shared authentication and category state; typed store hooks and domain interfaces keep UI, service, and API contracts aligned.
 - **Centralized authenticated networking:** a shared Axios client applies the access token, enforces a request timeout, and retries expired-token responses after refreshing credentials. Concurrent failures share one refresh request.
 - **Explicit session lifecycle:** the app restores a session at startup, persists the refresh token with AsyncStorage, and clears authentication and cached categories when a session ends or becomes invalid.
@@ -36,7 +36,7 @@ src/
 	app/          App composition and typed navigation stacks
 	components/   Reusable UI building blocks
 	configs/      Runtime configuration, including the API base URL
-	features/     Auth, category, expense, home, settings, and user modules
+	modules/     Auth, category, expense, home, settings, and user modules
 	services/     Shared API client and refresh-token storage
 	store/        Redux store and typed hooks
 	theme/        Colors, spacing, typography, sizes, and radii

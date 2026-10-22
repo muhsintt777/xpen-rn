@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { clearAuthSession, logout } from '@/features/auth/auth-slice';
+import { clearAuthSession, logout } from '@/modules/auth/auth-slice';
 import { CategoryService } from './category-service';
 import { Category } from './category-types';
 

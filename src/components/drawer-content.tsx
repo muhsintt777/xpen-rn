@@ -8,7 +8,7 @@ import {
   fetchCurrentUser,
   logout,
   selectAuth,
-} from '@/features/auth/auth-slice';
+} from '@/modules/auth/auth-slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { COLORS, RADII, SPACING, TYPOGRAPHY } from '@/theme';
 

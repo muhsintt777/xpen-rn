@@ -4,7 +4,7 @@ import { store } from '@/store';
 import {
   clearLocalSession,
   refreshAccessToken,
-} from '@/features/auth/auth-slice';
+} from '@/modules/auth/auth-slice';
 
 interface RetryableRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;

@@ -18,7 +18,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FormField } from '@/components/form-field';
 import { PrimaryButton } from '@/components/primary-button';
 import type { AuthStackParamList } from '@/app/app-navigator';
-import { AuthService } from '@/features/auth/auth-service';
+import { AuthService } from '@/modules/auth/auth-service';
 import { COLORS, RADII, SIZES, SPACING, TYPOGRAPHY } from '@/theme';
 
 export const SignupScreen = () => {
