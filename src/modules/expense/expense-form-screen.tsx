@@ -6,14 +6,17 @@ import {
   Text,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import type { AppStackParamList } from '@/app/navigation-types';
 import { FormField } from '@/shared/components/form-field';
 import { OptionChips } from '@/shared/components/option-chips';
 import { PrimaryButton } from '@/shared/components/primary-button';
 import { useExpenseForm } from './expense-form-hooks';
 import { styles } from './expense-form-screen-styles';
-import { ExpenseType } from './expense-types';
+import { Expense, ExpenseType } from './expense-types';
+
+interface ExpenseFormScreenProps {
+  expense?: Expense;
+  onSaved: () => void;
+}
 
 const TYPE_OPTIONS: { label: string; value: ExpenseType }[] = [
   { label: 'Need', value: 'NEED' },
@@ -21,10 +24,11 @@ const TYPE_OPTIONS: { label: string; value: ExpenseType }[] = [
   { label: 'Save', value: 'SAVE' },
 ];
 
-export const ExpenseFormScreen = () => {
-  const navigation = useNavigation();
-  const { params } = useRoute<RouteProp<AppStackParamList, 'ExpenseForm'>>();
-  const form = useExpenseForm(params?.expense, () => navigation.goBack());
+export const ExpenseFormScreen = ({
+  expense,
+  onSaved,
+}: ExpenseFormScreenProps) => {
+  const form = useExpenseForm(expense, onSaved);
 
   return (
     <SafeAreaView style={styles.safeArea}>

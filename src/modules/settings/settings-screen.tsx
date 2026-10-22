@@ -1,13 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { ScreenLayout } from '@/app/screen-layout';
 import { COLORS, TYPOGRAPHY } from '@/shared/theme';
 
 export const SettingsScreen = () => (
-  <ScreenLayout title="Settings">
-    <View style={styles.body}>
-      <Text style={styles.text}>Settings coming soon.</Text>
-    </View>
-  </ScreenLayout>
+  <View style={styles.body}>
+    <Text style={styles.text}>Settings coming soon.</Text>
+  </View>
 );
 
 const styles = StyleSheet.create({

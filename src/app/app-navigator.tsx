@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { LoginScreen, SignupScreen } from '@/modules/auth';
-import { ExpenseFormScreen } from '@/modules/expense';
-import { HomeScreen } from '@/modules/home';
-import { SettingsScreen } from '@/modules/settings';
+import {
+  AuthLoginRoute,
+  AuthSignupRoute,
+  ExpenseFormRoute,
+  HomeRoute,
+  SettingsRoute,
+} from './screen-routes';
 import type { AppStackParamList, AuthStackParamList } from './navigation-types';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { refreshAccessToken, selectAuth } from '@/modules/auth/state';
@@ -37,9 +40,9 @@ export const AppNavigator = () => {
             cardStyle: { backgroundColor: '#ffffff' },
           }}
         >
-          <AppStack.Screen name="Home" component={HomeScreen} />
-          <AppStack.Screen name="Settings" component={SettingsScreen} />
-          <AppStack.Screen name="ExpenseForm" component={ExpenseFormScreen} />
+          <AppStack.Screen name="Home" component={HomeRoute} />
+          <AppStack.Screen name="Settings" component={SettingsRoute} />
+          <AppStack.Screen name="ExpenseForm" component={ExpenseFormRoute} />
         </AppStack.Navigator>
       ) : (
         <AuthStack.Navigator
@@ -49,8 +52,8 @@ export const AppNavigator = () => {
             cardStyle: { backgroundColor: '#ffffff' },
           }}
         >
-          <AuthStack.Screen name="Login" component={LoginScreen} />
-          <AuthStack.Screen name="Signup" component={SignupScreen} />
+          <AuthStack.Screen name="Login" component={AuthLoginRoute} />
+          <AuthStack.Screen name="Signup" component={AuthSignupRoute} />
         </AuthStack.Navigator>
       )}
     </NavigationContainer>

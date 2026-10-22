@@ -1,18 +1,21 @@
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
-import { ScreenLayout } from '@/app/screen-layout';
 import { ExpenseItem } from '@/modules/expense';
-import { useNavigation } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
-import type { AppStackParamList } from '@/app/navigation-types';
 import { Fab } from '@/shared/components/fab';
 import { useExpenses } from '@/modules/expense';
 import { styles } from './home-screen-styles';
+import type { Expense } from '@/modules/expense';
+
+interface HomeScreenProps {
+  onAddExpense: () => void;
+  onEditExpense: (expense: Expense) => void;
+}
 
 const Separator = () => <View style={styles.separator} />;
 
-export const HomeScreen = () => {
-  const navigation =
-    useNavigation<StackNavigationProp<AppStackParamList, 'Home'>>();
+export const HomeScreen = ({
+  onAddExpense,
+  onEditExpense,
+}: HomeScreenProps) => {
   const {
     confirmDelete,
     error,
@@ -24,7 +27,7 @@ export const HomeScreen = () => {
   } = useExpenses();
 
   return (
-    <ScreenLayout title="Expenses">
+    <>
       <FlatList
         contentContainerStyle={styles.list}
         data={expenses}
@@ -46,16 +49,11 @@ export const HomeScreen = () => {
           <ExpenseItem
             expense={item}
             onLongPress={() => confirmDelete(item)}
-            onPress={() =>
-              navigation.navigate('ExpenseForm', { expense: item })
-            }
+            onPress={() => onEditExpense(item)}
           />
         )}
       />
-      <Fab
-        accessibilityLabel="Add expense"
-        onPress={() => navigation.navigate('ExpenseForm')}
-      />
-    </ScreenLayout>
+      <Fab accessibilityLabel="Add expense" onPress={onAddExpense} />
+    </>
   );
 };

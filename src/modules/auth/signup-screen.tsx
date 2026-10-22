@@ -12,18 +12,21 @@ import {
   Text,
   View,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FormField } from '@/shared/components/form-field';
 import { PrimaryButton } from '@/shared/components/primary-button';
-import type { AuthStackParamList } from '@/app/navigation-types';
 import { AuthService } from '@/modules/auth/auth-service';
 import { COLORS, RADII, SIZES, SPACING, TYPOGRAPHY } from '@/shared/theme';
 
-export const SignupScreen = () => {
-  const navigation =
-    useNavigation<StackNavigationProp<AuthStackParamList, 'Signup'>>();
+interface SignupScreenProps {
+  onLoginPress: () => void;
+  onSignupSuccess: () => void;
+}
+
+export const SignupScreen = ({
+  onLoginPress,
+  onSignupSuccess,
+}: SignupScreenProps) => {
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -52,7 +55,7 @@ export const SignupScreen = () => {
         'Account created',
         'You can now sign in with your new account.',
       );
-      navigation.replace('Login');
+      onSignupSuccess();
     } catch (error) {
       const isRateLimited =
         axios.isAxiosError<{ message?: string }>(error) &&
@@ -132,7 +135,7 @@ export const SignupScreen = () => {
           <Pressable
             accessibilityRole="button"
             disabled={isSubmitting}
-            onPress={() => navigation.navigate('Login')}
+            onPress={onLoginPress}
             style={styles.footer}
           >
             <Text style={styles.footerText}>

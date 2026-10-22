@@ -8,19 +8,18 @@ import {
   View,
   Pressable,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import type { AuthStackParamList } from '@/app/navigation-types';
 import { styles } from '@/modules/auth/login-screen-styles';
 import { PrimaryButton } from '@/shared/components/primary-button';
 import { FormField } from '@/shared/components/form-field';
 import { useLogin } from '@/modules/auth/auth-hooks';
 import { COLORS } from '@/shared/theme';
 
-export const LoginScreen = () => {
-  const navigation =
-    useNavigation<StackNavigationProp<AuthStackParamList, 'Login'>>();
+interface LoginScreenProps {
+  onSignupPress: () => void;
+}
+
+export const LoginScreen = ({ onSignupPress }: LoginScreenProps) => {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const { email, handleLogin, isLoggingIn, password, setEmail, setPassword } =
     useLogin();
@@ -107,7 +106,7 @@ export const LoginScreen = () => {
 
         <Pressable
           accessibilityRole="button"
-          onPress={() => navigation.navigate('Signup')}
+          onPress={onSignupPress}
           style={styles.footer}
         >
           <Text style={styles.footer}>

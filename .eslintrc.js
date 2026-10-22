@@ -34,6 +34,16 @@ module.exports = {
                 .flatMap((otherFeature) => [
                   `@/modules/${otherFeature}/**`,
                   `../${otherFeature}/**`,
+                ])
+                .concat([
+                  '@/app/app-*',
+                  '@/app/navigation-types',
+                  '@/app/screen-*',
+                  '@/app/drawer-content',
+                  '../../app/app-*',
+                  '../../app/navigation-types',
+                  '../../app/screen-*',
+                  '../../app/drawer-content',
                 ]),
             },
           ],
