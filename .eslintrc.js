@@ -11,11 +11,17 @@ module.exports = {
             patterns: [
               '@/app/**',
               '@/modules/**',
+              '@/store/**',
               '../app/**',
               '../../app/**',
+              '../../../app/**',
+              '../store/**',
+              '../../store/**',
+              '../../../store/**',
               '../modules/**',
               '../../modules/**',
               '../../../modules/**',
+              '../../../../modules/**',
             ],
           },
         ],
@@ -27,7 +33,14 @@ module.exports = {
       rules: {
         'no-restricted-imports': [
           'error',
-          { patterns: ['@/app/**', '../../app/**'] },
+          {
+            patterns: [
+              '@/app/**',
+              '../app/**',
+              '../../app/**',
+              '../../../app/**',
+            ],
+          },
         ],
       },
     },
@@ -50,8 +63,16 @@ module.exports = {
                 .flatMap((otherFeature) => [
                   `@/modules/${otherFeature}/**`,
                   `../${otherFeature}/**`,
+                  `../../${otherFeature}/**`,
+                  `../../../${otherFeature}/**`,
                 ])
-                .concat(['@/app/**', '../../app/**']),
+                .concat([
+                  '@/app/**',
+                  '../app/**',
+                  '../../app/**',
+                  '../../../app/**',
+                  '../../../../app/**',
+                ]),
             },
           ],
         },
