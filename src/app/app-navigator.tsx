@@ -9,7 +9,7 @@ import {
   SettingsRoute,
 } from './screen-routes';
 import type { AppStackParamList, AuthStackParamList } from './navigation-types';
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { refreshAccessToken, selectAuth } from '@/modules/auth/state';
 import { fetchCategories } from '@/modules/category';
 

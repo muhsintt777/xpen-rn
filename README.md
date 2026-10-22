@@ -18,56 +18,27 @@ The app is structured around feature ownership: screens and feature logic live t
 
 ```mermaid
 flowchart TD
-	App[App composition, routes, shell] --> Features[Feature modules]
-	App --> Store[Root store and typed hooks]
-	Store --> Features
-	App --> Shared[Shared UI and infrastructure]
-	Features --> Shared
-	Features --> Store
-	Features -. public API only .-> OtherFeatures[Other feature modules]
-	Shared --> External[Platform and backend]
+    App[App startup, routes, and shell] --> Store[Root store integration]
+    App --> Features[Feature modules via public APIs]
+    Store --> Features
+    Features --> StoreHooks[Typed Redux hooks]
+    Features --> Shared[Shared UI and infrastructure]
+    Features -. public API only .-> OtherFeatures[Other feature modules]
+    Shared --> External[Platform and backend]
 ```
 
-### Dependency Direction
+### Module Dependencies
 
-```mermaid
-flowchart TD
-	subgraph App["app: composition root"]
-		Composition["Startup, routes, and shell"]
-		Store["Root store and typed hooks"]
-	end
+| Module     | Depends on    |
+| ---------- | ------------- |
+| `auth`     | none          |
+| `category` | none          |
+| `expense`  | `home`, `app` |
+| `home`     | `app`         |
+| `settings` | `app`         |
+| `user`     | none          |
 
-	subgraph Features["modules: feature-owned behavior"]
-		Auth["auth"]
-		Category["category"]
-		Expense["expense"]
-		Home["home"]
-		User["user"]
-	end
-
-	Shared["shared infrastructure"]
-	External["React Native and backend"]
-
-	Composition -->|uses public APIs| Auth
-	Composition -->|uses public APIs| Expense
-	Composition -->|uses public APIs| Home
-	Composition -->|uses public APIs| User
-	Store -->|registers reducers via public APIs| Auth
-	Store -->|registers reducers via public APIs| Category
-	Store -->|registers reducers via public APIs| User
-	Auth -->|typed hooks| Store
-	Expense -->|typed hooks| Store
-	Home -->|typed hooks| Store
-	Expense -->|public API only| Category
-	Auth --> Shared
-	Category --> Shared
-	Expense --> Shared
-	Home --> Shared
-	User --> Shared
-	Shared --> External
-```
-
-Forbidden directions: features do not import app routes or shell, features do not import another feature's internals, and `shared` does not import from `app` or `modules`.
+Cross-feature imports use public APIs, never another feature's implementation files. The root store is responsible for reducer registration; typed store hooks are the approved state-integration interface for features. `app` is the composition root, while `modules` and `shared` must not depend on it.
 
 The API client owns transport concerns; feature services translate operations into endpoint calls; feature hooks coordinate screen state, validation, and side effects. Auth owns session credentials and login state; user owns the current profile; category owns the shared category cache. Expense pagination and form drafts stay local to expense hooks because they are screen-scoped. ESLint enforces the shared and cross-feature import boundaries.
 
@@ -75,11 +46,10 @@ The API client owns transport concerns; feature services translate operations in
 
 ```text
 src/
-	app/                  Composition, routes, shell, and root store
-		store/              Root Redux store and typed hooks
-	modules/              Auth, category, expense, home, settings, and user features
-		auth/               Includes auth-specific refresh-token storage
-	shared/               Reusable UI, design tokens, config, events, and API transport
+  app/          Startup, routes, navigation types, and shell
+  modules/      Auth, category, expense, home, settings, and user features
+  shared/       Reusable UI, theme, config, events, and API transport
+  store/        Root reducer composition and typed Redux hooks
 ```
 
 ## Technology

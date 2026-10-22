@@ -1,6 +1,6 @@
 import type { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { api } from '@/shared/services/api';
-import { store } from '@/app/store';
+import { store } from '@/store';
 import { clearLocalSession, refreshAccessToken } from '@/modules/auth/state';
 
 interface RetryableRequestConfig extends InternalAxiosRequestConfig {

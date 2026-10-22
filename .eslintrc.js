@@ -5,14 +5,30 @@ module.exports = {
     {
       files: ['src/shared/**/*.{ts,tsx}'],
       rules: {
-        'no-restricted-imports': ['error', { patterns: ['@/modules/**'] }],
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: [
+              '@/app/**',
+              '@/modules/**',
+              '../app/**',
+              '../../app/**',
+              '../modules/**',
+              '../../modules/**',
+              '../../../modules/**',
+            ],
+          },
+        ],
       },
     },
     {
-      files: ['src/app/store/**/*.{ts,tsx}'],
-      excludedFiles: ['src/app/store/index.ts'],
+      files: ['src/store/**/*.{ts,tsx}'],
+      excludedFiles: ['src/store/index.ts'],
       rules: {
-        'no-restricted-imports': ['error', { patterns: ['@/modules/**'] }],
+        'no-restricted-imports': [
+          'error',
+          { patterns: ['@/app/**', '../../app/**'] },
+        ],
       },
     },
     ...['auth', 'category', 'expense', 'home', 'settings', 'user'].map(
@@ -35,16 +51,7 @@ module.exports = {
                   `@/modules/${otherFeature}/**`,
                   `../${otherFeature}/**`,
                 ])
-                .concat([
-                  '@/app/app-*',
-                  '@/app/navigation-types',
-                  '@/app/screen-*',
-                  '@/app/drawer-content',
-                  '../../app/app-*',
-                  '../../app/navigation-types',
-                  '../../app/screen-*',
-                  '../../app/drawer-content',
-                ]),
+                .concat(['@/app/**', '../../app/**']),
             },
           ],
         },
