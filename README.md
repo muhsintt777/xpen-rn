@@ -2,7 +2,7 @@
 
 Xpen is a React Native expense-tracking app built with TypeScript. It supports account registration and sign-in, session restoration, and creating, editing, browsing, and deleting expenses classified as **Need**, **Want**, or **Save**.
 
-The app is structured around feature ownership: screens and feature logic live together, while shared navigation, API access, state setup, and reusable UI components have clear application-level boundaries.
+The app is structured around feature ownership: screens and feature logic live together, while navigation, state composition, transport, configuration, and reusable UI have explicit application or shared boundaries.
 
 ## Engineering Highlights
 
@@ -18,26 +18,68 @@ The app is structured around feature ownership: screens and feature logic live t
 
 ```mermaid
 flowchart TD
-		Screens[Navigation and feature screens] --> Hooks[Feature hooks]
-		Hooks --> Store[Redux Toolkit store]
-		Hooks --> Services[Feature services]
-		Services --> API[Axios API client]
-		API --> Backend[Expense API]
-		API --> Auth[Auth refresh flow]
-		Auth --> Storage[AsyncStorage refresh token]
+	App[App composition, routes, shell] --> Features[Feature modules]
+	App --> Store[Root store and typed hooks]
+	Store --> Features
+	App --> Shared[Shared UI and infrastructure]
+	Features --> Shared
+	Features --> Store
+	Features -. public API only .-> OtherFeatures[Other feature modules]
+	Shared --> External[Platform and backend]
 ```
 
-The API client owns shared transport concerns; feature services translate app operations into endpoint calls; hooks coordinate UI state, validation, and side effects. The root store composes reducers exported by the auth, category, and user modules. Auth owns session credentials and login state; user owns the authenticated profile; category owns the shared category cache. Expense pagination and form drafts stay local to expense hooks until another screen needs a shared cache or coordinated updates. The navigation tree switches between the authentication flow and the signed-in app flow based on restored Redux auth state.
+### Dependency Direction
+
+```mermaid
+flowchart TD
+	subgraph App["app: composition root"]
+		Composition["Startup, routes, and shell"]
+		Store["Root store and typed hooks"]
+	end
+
+	subgraph Features["modules: feature-owned behavior"]
+		Auth["auth"]
+		Category["category"]
+		Expense["expense"]
+		Home["home"]
+		User["user"]
+	end
+
+	Shared["shared infrastructure"]
+	External["React Native and backend"]
+
+	Composition -->|uses public APIs| Auth
+	Composition -->|uses public APIs| Expense
+	Composition -->|uses public APIs| Home
+	Composition -->|uses public APIs| User
+	Store -->|registers reducers via public APIs| Auth
+	Store -->|registers reducers via public APIs| Category
+	Store -->|registers reducers via public APIs| User
+	Auth -->|typed hooks| Store
+	Expense -->|typed hooks| Store
+	Home -->|typed hooks| Store
+	Expense -->|public API only| Category
+	Auth --> Shared
+	Category --> Shared
+	Expense --> Shared
+	Home --> Shared
+	User --> Shared
+	Shared --> External
+```
+
+Forbidden directions: features do not import app routes or shell, features do not import another feature's internals, and `shared` does not import from `app` or `modules`.
+
+The API client owns transport concerns; feature services translate operations into endpoint calls; feature hooks coordinate screen state, validation, and side effects. Auth owns session credentials and login state; user owns the current profile; category owns the shared category cache. Expense pagination and form drafts stay local to expense hooks because they are screen-scoped. ESLint enforces the shared and cross-feature import boundaries.
 
 ### Source Layout
 
 ```text
 src/
-  app/          App composition and typed navigation stacks
-		store/      Root Redux store and typed hooks
-  modules/      Auth, category, expense, home, settings, and user features
-    auth/       Includes auth-specific refresh-token storage
-	shared/       Reusable UI, design tokens, runtime config, events, and API transport
+	app/                  Composition, routes, shell, and root store
+		store/              Root Redux store and typed hooks
+	modules/              Auth, category, expense, home, settings, and user features
+		auth/               Includes auth-specific refresh-token storage
+	shared/               Reusable UI, design tokens, config, events, and API transport
 ```
 
 ## Technology
