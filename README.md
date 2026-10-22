@@ -31,16 +31,6 @@ Cross-feature imports use public APIs, never another feature's implementation fi
 
 The API client owns transport concerns; feature services translate operations into endpoint calls; feature hooks coordinate screen state, validation, and side effects. Auth owns session credentials and login state; user owns the current profile; category owns the shared category cache. Expense pagination and form drafts stay local to expense hooks because they are screen-scoped. ESLint enforces the shared and cross-feature import boundaries.
 
-### Source Layout
-
-```text
-src/
-  app/          Startup, routes, navigation types, and shell
-  modules/      Auth, category, expense, home, settings, and user features
-  shared/       Reusable UI, theme, config, events, and API transport
-  store/        Root reducer composition and typed Redux hooks
-```
-
 ## Technology
 
 - React Native 0.85 and React 19
