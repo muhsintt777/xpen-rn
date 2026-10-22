@@ -4,11 +4,7 @@ import DeviceInfo from 'react-native-device-info';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { AppStackParamList } from '@/app/app-navigator';
-import {
-  fetchCurrentUser,
-  logout,
-  selectAuth,
-} from '@/modules/auth/auth-slice';
+import { fetchCurrentUser, logout, selectAuth } from '@/modules/auth/state';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { COLORS, RADII, SPACING, TYPOGRAPHY } from '@/theme';
 

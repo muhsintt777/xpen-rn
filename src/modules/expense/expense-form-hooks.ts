@@ -4,7 +4,7 @@ import {
   fetchCategories,
   selectCategories,
   selectCategoriesStatus,
-} from '@/modules/category/category-slice';
+} from '@/modules/category';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { ExpenseService } from './expense-service';
 import { Expense, ExpenseType } from './expense-types';

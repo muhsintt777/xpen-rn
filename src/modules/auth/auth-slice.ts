@@ -1,13 +1,12 @@
 import {
   ActionReducerMapBuilder,
-  createAction,
   createAsyncThunk,
   createSlice,
 } from '@reduxjs/toolkit';
-import { AuthService } from '@/modules/auth/auth-service';
-import { UserService } from '@/modules/user/user-service';
-import type { User } from '@/modules/user/user-types';
+import { UserService, type User } from '@/modules/user';
 import { AuthStorage } from '@/services/auth-storage';
+import { sessionEnded } from '@/store/session-events';
+import { AuthService } from './auth-service';
 
 type AuthStatus = 'LOADING' | 'SUCCESS' | 'FAILED';
 
@@ -27,12 +26,10 @@ const initialState: AuthState = {
   user: null,
 };
 
-export const clearAuthSession = createAction('auth/clearSession');
-
 export const clearLocalSession = createAsyncThunk(
   'auth/clearLocalSession',
   async (_, { dispatch }) => {
-    dispatch(clearAuthSession());
+    dispatch(sessionEnded());
     await AuthStorage.clearTokens();
   },
 );
@@ -47,7 +44,7 @@ export const refreshAccessToken = createAsyncThunk(
       return tokens;
     } catch (error) {
       // A failed refresh invalidates the local session and cached user data.
-      dispatch(clearAuthSession());
+      dispatch(sessionEnded());
       await AuthStorage.clearTokens();
       throw error;
     }
@@ -67,13 +64,20 @@ export const fetchCurrentUser = createAsyncThunk('auth/fetchCurrentUser', () =>
   UserService.getCurrentUser(),
 );
 
-export const logout = createAsyncThunk('auth/logout', async () => {
-  try {
-    await AuthService.logout();
-  } finally {
-    await AuthStorage.clearTokens();
-  }
-});
+export const logout = createAsyncThunk(
+  'auth/logout',
+  async (_, { dispatch }) => {
+    try {
+      await AuthService.logout();
+    } finally {
+      try {
+        await AuthStorage.clearTokens();
+      } finally {
+        dispatch(sessionEnded());
+      }
+    }
+  },
+);
 
 const refreshAccessTokenBuilder = (
   builder: ActionReducerMapBuilder<AuthState>,
@@ -115,20 +119,6 @@ const currentUserBuilder = (builder: ActionReducerMapBuilder<AuthState>) => {
   });
 };
 
-const logoutBuilder = (builder: ActionReducerMapBuilder<AuthState>) => {
-  builder
-    .addCase(logout.fulfilled, (state) => {
-      state.accessToken = null;
-      state.isLoggedIn = false;
-      state.user = null;
-    })
-    .addCase(logout.rejected, (state) => {
-      state.accessToken = null;
-      state.isLoggedIn = false;
-      state.user = null;
-    });
-};
-
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -137,8 +127,7 @@ const authSlice = createSlice({
     refreshAccessTokenBuilder(builder);
     loginBuilder(builder);
     currentUserBuilder(builder);
-    logoutBuilder(builder);
-    builder.addCase(clearAuthSession, (state) => {
+    builder.addCase(sessionEnded, (state) => {
       state.accessToken = null;
       state.isLoggedIn = false;
       state.user = null;

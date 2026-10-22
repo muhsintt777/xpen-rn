@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { LoginScreen } from '@/modules/auth/login-screen';
-import { SignupScreen } from '@/modules/auth/signup-screen';
-import { ExpenseFormScreen } from '@/modules/expense/expense-form-screen';
-import type { Expense } from '@/modules/expense/expense-types';
-import { HomeScreen } from '@/modules/home/home-screen';
-import { SettingsScreen } from '@/modules/settings/settings-screen';
+import { LoginScreen, SignupScreen } from '@/modules/auth';
+import { ExpenseFormScreen, type Expense } from '@/modules/expense';
+import { HomeScreen } from '@/modules/home';
+import { SettingsScreen } from '@/modules/settings';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { refreshAccessToken, selectAuth } from '@/modules/auth/auth-slice';
-import { fetchCategories } from '@/modules/category/category-slice';
+import { refreshAccessToken, selectAuth } from '@/modules/auth/state';
+import { fetchCategories } from '@/modules/category';
 
 export type AuthStackParamList = {
   Login: undefined;
