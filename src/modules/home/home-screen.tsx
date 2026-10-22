@@ -3,7 +3,7 @@ import { ScreenLayout } from '@/components/screen-layout';
 import { ExpenseItem } from '@/components/expense-item';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import type { AppStackParamList } from '@/app/app-navigator';
+import type { AppStackParamList } from '@/app/navigation-types';
 import { Fab } from '@/components/fab';
 import { useExpenses } from '@/modules/expense';
 import { styles } from './home-screen-styles';

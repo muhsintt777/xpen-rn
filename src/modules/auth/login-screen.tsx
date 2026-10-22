@@ -11,7 +11,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import type { AuthStackParamList } from '@/app/app-navigator';
+import type { AuthStackParamList } from '@/app/navigation-types';
 import { styles } from '@/modules/auth/login-screen-styles';
 import { PrimaryButton } from '@/components/primary-button';
 import { FormField } from '@/components/form-field';
