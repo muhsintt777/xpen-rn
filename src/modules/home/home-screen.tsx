@@ -1,4 +1,5 @@
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { DashboardCard, useDashboard } from '@/modules/dashboard';
 import { ExpenseItem } from '@/modules/expense';
 import { Fab } from '@/shared/components/fab';
 import { useExpenses } from '@/modules/expense';
@@ -25,6 +26,12 @@ export const HomeScreen = ({
     loadMore,
     refresh,
   } = useExpenses();
+  const dashboard = useDashboard();
+
+  const handleRefresh = () => {
+    refresh();
+    dashboard.refresh();
+  };
 
   return (
     <>
@@ -33,6 +40,13 @@ export const HomeScreen = ({
         data={expenses}
         ItemSeparatorComponent={Separator}
         keyExtractor={(item) => String(item.id)}
+        ListHeaderComponent={
+          <DashboardCard
+            dashboard={dashboard.dashboard}
+            error={dashboard.error}
+            isLoading={dashboard.isLoading}
+          />
+        }
         ListEmptyComponent={
           isLoading || isRefreshing ? null : (
             <Text style={styles.message}>{error ?? 'No expenses yet.'}</Text>
@@ -43,7 +57,7 @@ export const HomeScreen = ({
         }
         onEndReached={loadMore}
         onEndReachedThreshold={0.5}
-        onRefresh={refresh}
+        onRefresh={handleRefresh}
         refreshing={isRefreshing}
         renderItem={({ item }) => (
           <ExpenseItem
