@@ -18,44 +18,64 @@ export const styles = StyleSheet.create({
   total: {
     ...TYPOGRAPHY.DISPLAY,
     color: COLORS.TEXT_PRIMARY,
-    marginTop: SPACING.INLINE_GAP,
+    marginTop: 2,
   },
   types: {
     flexDirection: 'row',
     gap: SPACING.LABEL_BOTTOM,
-    marginTop: SPACING.CARD_PADDING,
+    marginTop: SPACING.LOGO_GAP,
   },
   typeBox: {
-    backgroundColor: COLORS.BACKGROUND,
     borderColor: COLORS.BORDER_SUBTLE,
     borderRadius: RADII.CONTROL,
     borderWidth: 1,
     flex: 1,
-    padding: SPACING.LABEL_BOTTOM + 4,
+    minWidth: 0,
+    padding: SPACING.LABEL_BOTTOM,
   },
   typeHeader: {
     alignItems: 'center',
     flexDirection: 'row',
-    gap: SPACING.LABEL_BOTTOM - 2,
+    gap: SPACING.LABEL_BOTTOM,
   },
-  dot: {
+  icon: {
+    alignItems: 'center',
     borderRadius: RADII.PILL,
-    height: 8,
-    width: 8,
+    height: 28,
+    justifyContent: 'center',
+    width: 28,
+  },
+  iconText: {
+    ...TYPOGRAPHY.LABEL,
+    color: COLORS.TEXT_PRIMARY,
+    lineHeight: 18,
   },
   typeLabel: {
-    ...TYPOGRAPHY.LABEL,
-    color: COLORS.TEXT_SECONDARY,
+    ...TYPOGRAPHY.BODY_SMALL,
+    color: COLORS.TEXT_PRIMARY,
+    fontSize: 13,
   },
   typeAmount: {
-    ...TYPOGRAPHY.BODY,
+    ...TYPOGRAPHY.BODY_SMALL,
     color: COLORS.TEXT_PRIMARY,
     fontWeight: '700',
-    marginTop: SPACING.INLINE_GAP,
+    marginTop: SPACING.LABEL_BOTTOM,
+  },
+  typeShare: {
+    ...TYPOGRAPHY.LABEL,
+    color: COLORS.TEXT_SECONDARY,
+    fontSize: 12,
+    fontWeight: '400',
+    marginTop: 2,
+  },
+  divider: {
+    backgroundColor: COLORS.BORDER_SUBTLE,
+    height: 1,
+    marginTop: SPACING.LOGO_GAP,
   },
   chart: {
     alignItems: 'center',
-    marginVertical: SPACING.FORM_GAP,
+    marginVertical: SPACING.LOGO_GAP,
   },
   chartCaption: {
     ...TYPOGRAPHY.LABEL,
@@ -67,12 +87,13 @@ export const styles = StyleSheet.create({
     fontWeight: '700',
   },
   legend: {
-    gap: SPACING.LOGO_GAP,
+    gap: 0,
   },
   legendRow: {
     alignItems: 'center',
     flexDirection: 'row',
-    gap: SPACING.LOGO_GAP,
+    gap: SPACING.LABEL_BOTTOM,
+    minHeight: 32,
   },
   legendDot: {
     borderRadius: RADII.PILL,
@@ -80,9 +101,15 @@ export const styles = StyleSheet.create({
     width: 10,
   },
   legendName: {
-    ...TYPOGRAPHY.BODY_SMALL,
+    ...TYPOGRAPHY.LABEL,
     color: COLORS.TEXT_PRIMARY,
     flex: 1,
+    fontWeight: '400',
+  },
+  legendShare: {
+    ...TYPOGRAPHY.LABEL,
+    color: COLORS.TEXT_SECONDARY,
+    fontWeight: '400',
   },
   message: {
     ...TYPOGRAPHY.BODY,
